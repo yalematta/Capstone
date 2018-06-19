@@ -1,8 +1,7 @@
 package com.yalematta.earcasts.ui.main.featured;
 
-import android.content.Context;
-
 import com.yalematta.earcasts.data.models.podcast.Podcast;
+import com.yalematta.earcasts.data.remote.Interactor;
 
 import java.util.List;
 
@@ -13,18 +12,18 @@ import java.util.List;
 public class FeaturedPresenterImpl implements FeaturedContract.Presenter, FeaturedContract.onGetDataListener {
 
     private final FeaturedContract.View mFeaturedContractView;
-    private Intractor mIntractor;
+    private Interactor mIntractor;
 
     public FeaturedPresenterImpl(FeaturedContract.View RestaurantContractView) {
-        mIntractor = new Intractor(this);
+        mIntractor = new Interactor(this);
         mFeaturedContractView = RestaurantContractView;
         mFeaturedContractView.setPresenter(this);
     }
 
-//  @Override
-//  public void getData(int currentPage, int podcastCount) {
-//      mIntractor.getAllPodcasts(currentPage, podcastCount);
-//  }
+    @Override
+    public void getData(int currentPage, int podcastCount) {
+        mIntractor.getAllPodcasts(currentPage, podcastCount);
+    }
 
     @Override
     public void getFeaturedData(int podcastCount, String podcastLanguage) {

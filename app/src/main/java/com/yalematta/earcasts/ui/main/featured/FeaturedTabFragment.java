@@ -2,7 +2,6 @@ package com.yalematta.earcasts.ui.main.featured;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -10,7 +9,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -54,11 +52,50 @@ public class FeaturedTabFragment extends Fragment implements FeaturedContract.Vi
 
         ButterKnife.bind(this, root);
 
-//      mPresenter = new Presenter(this);
         int numberOfColumns = 3;
-        mPresenter.getFeaturedData(10, "en");
+        mPresenter.getFeaturedData(30, "en");
         gridLayoutManager = new GridLayoutManager(this.getContext(), numberOfColumns);
         recyclerView.setLayoutManager(gridLayoutManager);
+
+        // TODO: Click handling for RecyclerView
+        //        ItemClickSupport.addTo(recyclerView).setOnItemClickListener(
+        //                new ItemClickSupport.OnItemClickListener() {
+        //                    @Override
+        //                    public void onItemClicked(RecyclerView recyclerView, int position, View v) {
+        //                        ShowToast("clicked " + position);
+        //                    }
+        //                }
+        //        );
+
+        // TODO: In another fragment this woud help us in the load more functionality
+        //        recyclerView.addOnScrollListener(new PaginationScrollListener(gridLayoutManager) {
+        //            @Override
+        //            protected void loadMoreItems() {
+        //                isLoading = true;
+        //                currentPage++;
+        //                if (screenType.equalsIgnoreCase(SHOWS_DETAILS)) {
+        ////                        getRelatedEpisodes();
+        //                    getRelatedEpisodesLoadMore();
+        //                } else {
+        //                    getRelatedBulletins();
+        //                }
+        //            }
+        //
+        //            @Override
+        //            public int getTotalPageCount() {
+        //                return 0;
+        //            }
+        //
+        //            @Override
+        //            public boolean isLastPage() {
+        //                return isLastPage;
+        //            }
+        //
+        //            @Override
+        //            public boolean isLoading() {
+        //                return isLoading;
+        //            }
+        //        });
 
         return root;
     }

@@ -1,7 +1,5 @@
 package com.yalematta.earcasts.ui.main.featured;
 
-import android.content.Context;
-
 import com.yalematta.earcasts.BasePresenter;
 import com.yalematta.earcasts.BaseView;
 import com.yalematta.earcasts.data.models.podcast.Podcast;
@@ -20,12 +18,12 @@ public interface FeaturedContract {
     }
 
     interface Presenter extends BasePresenter {
-        //void getData(int currentPage, int podcastCount);
+        void getData(int currentPage, int podcastCount);
         void getFeaturedData(int podcastCount, String podcastLanguage);
     }
 
     interface Interactor {
-        //void getAllPodcasts(int currentPage, int podcastCount);
+        void getAllPodcasts(int currentPage, int podcastCount);
         void getFeaturedPodcasts(int podcastCount, String podcastLanguage);
     }
 

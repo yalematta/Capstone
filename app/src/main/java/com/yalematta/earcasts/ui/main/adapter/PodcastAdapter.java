@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.yalematta.earcasts.R;
@@ -23,6 +24,9 @@ import butterknife.ButterKnife;
 
 public class PodcastAdapter extends RecyclerView.Adapter<PodcastAdapter.PodViewHolder> {
 
+    public static final int TYPE_FIRST_ITEM = 0;
+    public static final int TYPE_ITEM = 1;
+
     private Context context;
     private List<Podcast> list = new ArrayList<>();
 
@@ -39,10 +43,17 @@ public class PodcastAdapter extends RecyclerView.Adapter<PodcastAdapter.PodViewH
     }
 
     @Override
-    public void onBindViewHolder(PodcastAdapter.PodViewHolder holder, int position) {
+    public void onBindViewHolder(PodcastAdapter.PodViewHolder holder, final int position) {
         Glide.with(context)
                 .load(list.get(position).getSmallImageURL())
                 .into(holder.ivPodImage);
+
+        holder.ivPodImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(context, list.get(position).getTitle().toString(), Toast.LENGTH_LONG).show();
+            }
+        });
     }
 
     @Override
@@ -51,7 +62,9 @@ public class PodcastAdapter extends RecyclerView.Adapter<PodcastAdapter.PodViewH
     }
 
     public class PodViewHolder extends RecyclerView.ViewHolder {
+
         @BindView(R.id.image_view) ImageView ivPodImage;
+
         public PodViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
