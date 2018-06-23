@@ -14,9 +14,9 @@ public class FeaturedPresenterImpl implements FeaturedContract.Presenter, Featur
     private final FeaturedContract.View mFeaturedContractView;
     private Interactor mIntractor;
 
-    public FeaturedPresenterImpl(FeaturedContract.View RestaurantContractView) {
+    public FeaturedPresenterImpl(FeaturedContract.View FeaturedContractView) {
         mIntractor = new Interactor(this);
-        mFeaturedContractView = RestaurantContractView;
+        mFeaturedContractView = FeaturedContractView;
         mFeaturedContractView.setPresenter(this);
     }
 

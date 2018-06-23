@@ -67,7 +67,7 @@ public class FeaturedTabFragment extends Fragment implements FeaturedContract.Vi
         //                }
         //        );
 
-        // TODO: In another fragment this woud help us in the load more functionality
+        // TODO: In another fragment this would help us in the load more functionality
         //        recyclerView.addOnScrollListener(new PaginationScrollListener(gridLayoutManager) {
         //            @Override
         //            protected void loadMoreItems() {

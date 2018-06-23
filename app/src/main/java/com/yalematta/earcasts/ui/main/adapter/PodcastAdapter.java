@@ -24,9 +24,6 @@ import butterknife.ButterKnife;
 
 public class PodcastAdapter extends RecyclerView.Adapter<PodcastAdapter.PodViewHolder> {
 
-    public static final int TYPE_FIRST_ITEM = 0;
-    public static final int TYPE_ITEM = 1;
-
     private Context context;
     private List<Podcast> list = new ArrayList<>();
 

@@ -4,6 +4,8 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
+import com.yalematta.earcasts.ui.main.categories.CategoriesPresenterImpl;
+import com.yalematta.earcasts.ui.main.categories.CategoriesTabFragment;
 import com.yalematta.earcasts.ui.main.featured.FeaturedPresenterImpl;
 import com.yalematta.earcasts.ui.main.featured.FeaturedTabFragment;
 
@@ -16,6 +18,7 @@ public class TabPagerAdapter extends FragmentPagerAdapter {
     private static final int PAGE_NUMBER = 2;
 
     private FeaturedPresenterImpl mFeaturedPresenter;
+    private CategoriesPresenterImpl mCategoriesPresenter;
 
     public TabPagerAdapter(FragmentManager fragmentManager) {
         super(fragmentManager);
@@ -32,10 +35,10 @@ public class TabPagerAdapter extends FragmentPagerAdapter {
             }
 
             case 1: {
-                FeaturedTabFragment featuredTabFragment = FeaturedTabFragment.newInstance();
-                mFeaturedPresenter = new FeaturedPresenterImpl(featuredTabFragment);
+                CategoriesTabFragment categoriesTabFragment = CategoriesTabFragment.newInstance();
+                mCategoriesPresenter = new CategoriesPresenterImpl(categoriesTabFragment);
 
-                return featuredTabFragment;
+                return categoriesTabFragment;
             }
             default:
                 return null;
