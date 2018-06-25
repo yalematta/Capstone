@@ -10,7 +10,9 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -34,11 +36,8 @@ public class CategoriesTabFragment extends Fragment implements CategoriesContrac
 
     private CategoriesContract.Presenter mPresenter;
 
-    @BindView(R.id.recycler_view) RecyclerView recyclerView;
+    @BindView(R.id.list_view) ListView listView;
     @BindView(R.id.empty_view) TextView tvEmptyView;
-
-    private LinearLayoutManager linearLayoutManager;
-    private CategoriesAdapter categoriesAdapter;
 
     public CategoriesTabFragment() {
 
@@ -51,13 +50,11 @@ public class CategoriesTabFragment extends Fragment implements CategoriesContrac
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
-        View root = inflater.inflate(R.layout.featured_frag, container, false);
+        View root = inflater.inflate(R.layout.categories_frag, container, false);
 
         ButterKnife.bind(this, root);
 
         mPresenter.getCategoriesData();
-        linearLayoutManager = new LinearLayoutManager(this.getContext());
-        recyclerView.setLayoutManager(linearLayoutManager);
 
         return root;
     }
@@ -73,9 +70,9 @@ public class CategoriesTabFragment extends Fragment implements CategoriesContrac
     }
 
     @Override
-    public void onGetDataSuccess(String message, HashMap<Integer, String> map) {
-        categoriesAdapter = new CategoriesAdapter(getContext(), map);
-        recyclerView.setAdapter(categoriesAdapter);
+    public void onGetDataSuccess(String message, List<String> categoriesList) {
+        ArrayAdapter<String> categoriesAdapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_list_item_1, categoriesList);
+        listView.setAdapter(categoriesAdapter);
     }
 
     @Override

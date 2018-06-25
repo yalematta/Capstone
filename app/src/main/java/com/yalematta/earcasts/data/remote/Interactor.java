@@ -26,6 +26,7 @@ public class Interactor implements FeaturedContract.Interactor, CategoriesContra
     private CategoriesContract.onGetDataListener mOnGetCategorieslistener;
 
     List<Podcast> allPodcasts = new ArrayList<>();
+    List<String> categoriesList = new ArrayList<>();
     List<Category> allCategories = new ArrayList<>();
     HashMap<Integer,String> categoriesMap = new HashMap<>();
 
@@ -99,19 +100,25 @@ public class Interactor implements FeaturedContract.Interactor, CategoriesContra
                     allCategories = response.body().data;
                     Log.d("Data", "Refreshed");
 
-                    int lastId = allCategories.get(allCategories.size() - 1).getId();
-
                     for (int i = 0; i < allCategories.size(); i++) {
                         categoriesMap.put(allCategories.get(i).getId(), allCategories.get(i).getName());
-                        for (int j = 0; j < allCategories.get(i).getSubcategories().size(); j++){
-                            categoriesMap.put(allCategories.get(i).getSubcategories().get(j).getId(), allCategories.get(i).getSubcategories().get(j).getName());
+                        if (allCategories.get(i).getSubcategories().size() > 0) {
+                            for (int j = 0; j < allCategories.get(i).getSubcategories().size(); j++) {
+                                categoriesMap.put(allCategories.get(i).getSubcategories().get(j).getId(), allCategories.get(i).getSubcategories().get(j).getName());
+                            }
                         }
                     }
 
-                    mOnGetCategorieslistener.onSuccess("List Size: " + allCategories.size(), categoriesMap);
+                    for (int i = 0; i < categoriesMap.size(); i++){
+                        categoriesList.add(categoriesMap.get(i));
+                    }
 
                 } else {
                     Log.v("Error", "401 authentication error");
+                }
+
+                if (categoriesList != null){
+                    mOnGetCategorieslistener.onSuccess("List Size: " + categoriesList.size(), categoriesList);
                 }
             }
 
