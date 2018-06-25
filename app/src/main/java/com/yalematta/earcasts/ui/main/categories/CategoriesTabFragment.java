@@ -35,9 +35,12 @@ public class CategoriesTabFragment extends Fragment implements CategoriesContrac
     private static final String TAG = CategoriesTabFragment.class.getSimpleName();
 
     private CategoriesContract.Presenter mPresenter;
+    private ArrayAdapter<String> categoriesAdapter;
 
-    @BindView(R.id.list_view) ListView listView;
-    @BindView(R.id.empty_view) TextView tvEmptyView;
+    @BindView(R.id.list_view)
+    ListView listView;
+    @BindView(R.id.empty_view)
+    TextView tvEmptyView;
 
     public CategoriesTabFragment() {
 
@@ -51,9 +54,7 @@ public class CategoriesTabFragment extends Fragment implements CategoriesContrac
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.categories_frag, container, false);
-
         ButterKnife.bind(this, root);
-
         mPresenter.getCategoriesData();
 
         return root;
@@ -71,7 +72,7 @@ public class CategoriesTabFragment extends Fragment implements CategoriesContrac
 
     @Override
     public void onGetDataSuccess(String message, List<String> categoriesList) {
-        ArrayAdapter<String> categoriesAdapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_list_item_1, categoriesList);
+        categoriesAdapter = new ArrayAdapter<>(getContext(), R.layout.category_item, categoriesList);
         listView.setAdapter(categoriesAdapter);
     }
 
