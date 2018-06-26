@@ -28,16 +28,17 @@ public class Interactor implements FeaturedContract.Interactor, CategoriesContra
     List<Podcast> allPodcasts = new ArrayList<>();
     List<String> categoriesList = new ArrayList<>();
     List<Category> allCategories = new ArrayList<>();
-    HashMap<Integer,String> categoriesMap = new HashMap<>();
+    HashMap<Integer, String> categoriesMap = new HashMap<>();
 
-    public Interactor(FeaturedContract.onGetDataListener onGetPodcastslistener){
+    public Interactor(FeaturedContract.onGetDataListener onGetPodcastslistener) {
         this.mOnGetPodcastslistener = onGetPodcastslistener;
     }
 
-    public Interactor(CategoriesContract.onGetDataListener onGetCategorieslistener){
+    public Interactor(CategoriesContract.onGetDataListener onGetCategorieslistener) {
         this.mOnGetCategorieslistener = onGetCategorieslistener;
     }
 
+    //region All Podcasts
     @Override
     public void getAllPodcasts(int currentPage, int podcastCount) {
         Call<BaseListResponse<Podcast>> call = ApiClient.getClient().getApiInterface().getAllPodcasts(currentPage, podcastCount);
@@ -62,7 +63,9 @@ public class Interactor implements FeaturedContract.Interactor, CategoriesContra
             }
         });
     }
+    //endregion
 
+    //region Featured Podcasts
     @Override
     public void getFeaturedPodcasts(int podcastCount, String podcastLanguage) {
         Call<BaseListResponse<Podcast>> call = ApiClient.getClient().getApiInterface().getFeaturedPodcasts(podcastCount, podcastLanguage);
@@ -87,7 +90,9 @@ public class Interactor implements FeaturedContract.Interactor, CategoriesContra
             }
         });
     }
+    //endregion
 
+    //region Categories
     @Override
     public void getCategories() {
         Call<BaseListResponse<Category>> call = ApiClient.getClient().getApiInterface().getCategories();
@@ -109,15 +114,16 @@ public class Interactor implements FeaturedContract.Interactor, CategoriesContra
                         }
                     }
 
-                    for (int i = 0; i < categoriesMap.size(); i++){
-                        categoriesList.add(categoriesMap.get(i));
+                    for (int i = 0; i < categoriesMap.size(); i++) {
+                        if (categoriesMap.get(i) != null)
+                            categoriesList.add(categoriesMap.get(i).toString());
                     }
 
                 } else {
                     Log.v("Error", "401 authentication error");
                 }
 
-                if (categoriesList != null){
+                if (categoriesList != null) {
                     mOnGetCategorieslistener.onSuccess("List Size: " + categoriesList.size(), categoriesList);
                 }
             }
@@ -128,5 +134,7 @@ public class Interactor implements FeaturedContract.Interactor, CategoriesContra
                 mOnGetCategorieslistener.onFailure(t.getMessage());
             }
         });
+
     }
+    //endregion
 }

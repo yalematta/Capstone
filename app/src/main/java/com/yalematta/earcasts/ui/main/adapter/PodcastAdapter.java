@@ -11,6 +11,8 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.yalematta.earcasts.R;
 import com.yalematta.earcasts.data.models.podcast.Podcast;
+import com.yalematta.earcasts.ui.details.podcasts.PodcastBottomDialogFragment;
+import com.yalematta.earcasts.ui.main.MainActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -49,6 +51,8 @@ public class PodcastAdapter extends RecyclerView.Adapter<PodcastAdapter.PodViewH
             @Override
             public void onClick(View view) {
                 Toast.makeText(context, list.get(position).getTitle().toString(), Toast.LENGTH_LONG).show();
+                PodcastBottomDialogFragment bottomPodcast = PodcastBottomDialogFragment.newInstance();
+                bottomPodcast.show(((MainActivity)context).getSupportFragmentManager(), PodcastBottomDialogFragment.class.getName());
             }
         });
     }
