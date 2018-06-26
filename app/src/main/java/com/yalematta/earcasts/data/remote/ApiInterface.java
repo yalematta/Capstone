@@ -37,4 +37,6 @@ public interface ApiInterface {
     @GET("category")
     Call<BaseResponse<CatPodcasts>> getPodcastsByCategory(@Query("category_id") int categoryID, @Query("page") int page, @Query("count") int count);
 
+    @GET("podcast/episodes")
+    Call<BaseResponse<Podcast>> getPodcastEpisodes(@Query("podcast_id") int podcastID, @Query("page") int page, @Query("count") int count);
 }

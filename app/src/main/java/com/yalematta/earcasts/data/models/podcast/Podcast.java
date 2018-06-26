@@ -50,6 +50,8 @@ public class Podcast {
     public String subtitle;
     @SerializedName("episode_count")
     public int episodeCount;
+    @SerializedName("episodes")
+    public List<Episode> episodes = null;
 
     public String getTitle() {
         return title;
@@ -210,4 +212,8 @@ public class Podcast {
     public void setEpisodeCount(int episodeCount) {
         this.episodeCount = episodeCount;
     }
+
+    public List<Episode> getEpisodes() { return episodes; }
+
+    public void setEpisodes(List<Episode> episodes) { this.episodes = episodes; }
 }
