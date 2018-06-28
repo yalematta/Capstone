@@ -29,10 +29,14 @@ public class PodcastBottomDialogFragment extends BottomSheetDialogFragment imple
     private static final String PODCAST_ID = "PODCAST_ID";
     private PodcastBottomDialogContract.Presenter mPresenter;
 
-    @BindView(R.id.image) ImageView ivLogo;
-    @BindView(R.id.title) TextView tvTitle;
-    @BindView(R.id.fab) FloatingActionButton fab;
-    @BindView(R.id.description) TextView tvDescription;
+    @BindView(R.id.image)
+    ImageView ivLogo;
+    @BindView(R.id.title)
+    TextView tvTitle;
+    @BindView(R.id.fab)
+    FloatingActionButton fab;
+    @BindView(R.id.description)
+    TextView tvDescription;
 
     public static PodcastBottomDialogFragment newInstance(int podcastId) {
         PodcastBottomDialogFragment fragment = new PodcastBottomDialogFragment();
@@ -42,10 +46,10 @@ public class PodcastBottomDialogFragment extends BottomSheetDialogFragment imple
         return fragment;
     }
 
-    private int getPodcastId(){
-        if (getArguments() != null){
+    private int getPodcastId() {
+        if (getArguments() != null) {
             return getArguments().getInt(PODCAST_ID);
-        } else{
+        } else {
             return 0;
         }
     }
@@ -58,14 +62,17 @@ public class PodcastBottomDialogFragment extends BottomSheetDialogFragment imple
 
         View view = inflater.inflate(R.layout.podcast_bottom_sheet, container, false);
         ButterKnife.bind(this, view);
-        if(getPodcastId() != 0)
+        if (getPodcastId() != 0) {
             mPodcastId = getPodcastId();
-        mPresenter.getPodcastData(mPodcastId);
+            mPresenter.getPodcastData(mPodcastId);
+        }
         return view;
     }
 
     @Override
-    public void setPresenter(PodcastBottomDialogContract.Presenter presenter) { mPresenter = presenter; }
+    public void setPresenter(PodcastBottomDialogContract.Presenter presenter) {
+        mPresenter = presenter;
+    }
 
     @Override
     public void ShowToast(String text) {
@@ -84,5 +91,6 @@ public class PodcastBottomDialogFragment extends BottomSheetDialogFragment imple
 
     @Override
     public void onGetDataFailure(String message) {
-        Log.d("Status", message); }
+        Log.d("Status", message);
+    }
 }

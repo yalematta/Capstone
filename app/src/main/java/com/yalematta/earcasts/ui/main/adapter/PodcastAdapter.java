@@ -12,7 +12,9 @@ import com.bumptech.glide.Glide;
 import com.yalematta.earcasts.R;
 import com.yalematta.earcasts.data.models.podcast.Podcast;
 import com.yalematta.earcasts.ui.details.podcasts.PodcastBottomDialogFragment;
+import com.yalematta.earcasts.ui.details.podcasts.PodcastBottomDialogPresenterImpl;
 import com.yalematta.earcasts.ui.main.MainActivity;
+import com.yalematta.earcasts.ui.main.featured.FeaturedPresenterImpl;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,6 +30,7 @@ public class PodcastAdapter extends RecyclerView.Adapter<PodcastAdapter.PodViewH
 
     private Context context;
     private List<Podcast> list = new ArrayList<>();
+    private PodcastBottomDialogPresenterImpl mPodcastBottomDialogPresenter;
 
     public PodcastAdapter(Context context, List<Podcast> list){
         this.context = context;
@@ -52,6 +55,7 @@ public class PodcastAdapter extends RecyclerView.Adapter<PodcastAdapter.PodViewH
             public void onClick(View view) {
                 Toast.makeText(context, list.get(position).getTitle().toString(), Toast.LENGTH_LONG).show();
                 PodcastBottomDialogFragment bottomPodcast = PodcastBottomDialogFragment.newInstance(list.get(position).getId());
+                mPodcastBottomDialogPresenter = new PodcastBottomDialogPresenterImpl(bottomPodcast);
                 bottomPodcast.show(((MainActivity)context).getSupportFragmentManager(), PodcastBottomDialogFragment.class.getName());
             }
         });
