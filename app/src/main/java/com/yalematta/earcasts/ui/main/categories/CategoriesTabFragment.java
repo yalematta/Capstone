@@ -49,7 +49,6 @@ public class CategoriesTabFragment extends Fragment implements CategoriesContrac
         View root = inflater.inflate(R.layout.categories_frag, container, false);
         ButterKnife.bind(this, root);
         mPresenter.getCategoriesData();
-
         return root;
     }
 

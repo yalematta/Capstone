@@ -3,8 +3,10 @@ package com.yalematta.earcasts.data.remote;
 import android.util.Log;
 
 import com.yalematta.earcasts.data.models.BaseListResponse;
+import com.yalematta.earcasts.data.models.BaseResponse;
 import com.yalematta.earcasts.data.models.category.Category;
 import com.yalematta.earcasts.data.models.podcast.Podcast;
+import com.yalematta.earcasts.ui.details.podcasts.PodcastBottomDialogContract;
 import com.yalematta.earcasts.ui.main.categories.CategoriesContract;
 import com.yalematta.earcasts.ui.main.featured.FeaturedContract;
 
@@ -20,22 +22,28 @@ import retrofit2.Response;
  * Created by yalematta on 6/17/18.
  */
 
-public class Interactor implements FeaturedContract.Interactor, CategoriesContract.Interactor {
+public class Interactor implements FeaturedContract.Interactor, CategoriesContract.Interactor, PodcastBottomDialogContract.Interactor {
 
-    private FeaturedContract.onGetDataListener mOnGetPodcastslistener;
-    private CategoriesContract.onGetDataListener mOnGetCategorieslistener;
+    private FeaturedContract.onGetDataListener mOnGetPodcastsListener;
+    private CategoriesContract.onGetDataListener mOnGetCategoriesListener;
+    private PodcastBottomDialogContract.onGetDataListener mOnGetPodcastBottomDialogListener;
 
+    Podcast selectedPodcast = new Podcast();
     List<Podcast> allPodcasts = new ArrayList<>();
     List<String> categoriesList = new ArrayList<>();
     List<Category> allCategories = new ArrayList<>();
     HashMap<Integer, String> categoriesMap = new HashMap<>();
 
-    public Interactor(FeaturedContract.onGetDataListener onGetPodcastslistener) {
-        this.mOnGetPodcastslistener = onGetPodcastslistener;
+    public Interactor(FeaturedContract.onGetDataListener onGetPodcastsListener) {
+        this.mOnGetPodcastsListener = onGetPodcastsListener;
     }
 
-    public Interactor(CategoriesContract.onGetDataListener onGetCategorieslistener) {
-        this.mOnGetCategorieslistener = onGetCategorieslistener;
+    public Interactor(CategoriesContract.onGetDataListener onGetCategoriesListener) {
+        this.mOnGetCategoriesListener = onGetCategoriesListener;
+    }
+
+    public Interactor(PodcastBottomDialogContract.onGetDataListener onGetPodcastBottomDialogListener) {
+        this.mOnGetPodcastBottomDialogListener = onGetPodcastBottomDialogListener;
     }
 
     //region All Podcasts
@@ -49,7 +57,7 @@ public class Interactor implements FeaturedContract.Interactor, CategoriesContra
                 if (response.isSuccessful()) {
                     allPodcasts = response.body().data;
                     Log.d("Data", "Refreshed");
-                    mOnGetPodcastslistener.onSuccess("List Size: " + allPodcasts.size(), allPodcasts);
+                    mOnGetPodcastsListener.onSuccess("List Size: " + allPodcasts.size(), allPodcasts);
 
                 } else {
                     Log.v("Error", "401 authentication error");
@@ -59,7 +67,7 @@ public class Interactor implements FeaturedContract.Interactor, CategoriesContra
             @Override
             public void onFailure(Call<BaseListResponse<Podcast>> call, Throwable t) {
                 Log.v("Error", t.getMessage());
-                mOnGetPodcastslistener.onFailure(t.getMessage());
+                mOnGetPodcastsListener.onFailure(t.getMessage());
             }
         });
     }
@@ -76,7 +84,7 @@ public class Interactor implements FeaturedContract.Interactor, CategoriesContra
                 if (response.isSuccessful()) {
                     allPodcasts = response.body().data;
                     Log.d("Data", "Refreshed");
-                    mOnGetPodcastslistener.onSuccess("List Size: " + allPodcasts.size(), allPodcasts);
+                    mOnGetPodcastsListener.onSuccess("List Size: " + allPodcasts.size(), allPodcasts);
 
                 } else {
                     Log.v("Error", "401 authentication error");
@@ -86,7 +94,7 @@ public class Interactor implements FeaturedContract.Interactor, CategoriesContra
             @Override
             public void onFailure(Call<BaseListResponse<Podcast>> call, Throwable t) {
                 Log.v("Error", t.getMessage());
-                mOnGetPodcastslistener.onFailure(t.getMessage());
+                mOnGetPodcastsListener.onFailure(t.getMessage());
             }
         });
     }
@@ -124,17 +132,43 @@ public class Interactor implements FeaturedContract.Interactor, CategoriesContra
                 }
 
                 if (categoriesList != null) {
-                    mOnGetCategorieslistener.onSuccess("List Size: " + categoriesList.size(), categoriesList);
+                    mOnGetCategoriesListener.onSuccess("List Size: " + categoriesList.size(), categoriesList);
                 }
             }
 
             @Override
             public void onFailure(Call<BaseListResponse<Category>> call, Throwable t) {
                 Log.v("Error", t.getMessage());
-                mOnGetCategorieslistener.onFailure(t.getMessage());
+                mOnGetCategoriesListener.onFailure(t.getMessage());
             }
         });
 
     }
     //endregion
+
+    //region Podcast Details
+    @Override
+    public void getPodcastDetails(int podcastId) {
+        Call<BaseResponse<Podcast>> call = ApiClient.getClient().getApiInterface().getPodcastDetails(podcastId);
+        call.enqueue(new Callback<BaseResponse<Podcast>>() {
+
+            @Override
+            public void onResponse(Call<BaseResponse<Podcast>> call, Response<BaseResponse<Podcast>> response) {
+                if (response.isSuccessful()) {
+                    selectedPodcast = response.body().data;
+                    mOnGetPodcastBottomDialogListener.onSuccess("Selected Podcast: " + selectedPodcast.getTitle(), selectedPodcast);
+                } else {
+                    Log.v("Error", "401 authentication error");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<BaseResponse<Podcast>> call, Throwable t) {
+                Log.v("Error", t.getMessage());
+                mOnGetPodcastBottomDialogListener.onFailure(t.getMessage());
+            }
+        });
+    }
+    //endregion
+
 }

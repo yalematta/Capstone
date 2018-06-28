@@ -51,7 +51,7 @@ public class PodcastAdapter extends RecyclerView.Adapter<PodcastAdapter.PodViewH
             @Override
             public void onClick(View view) {
                 Toast.makeText(context, list.get(position).getTitle().toString(), Toast.LENGTH_LONG).show();
-                PodcastBottomDialogFragment bottomPodcast = PodcastBottomDialogFragment.newInstance();
+                PodcastBottomDialogFragment bottomPodcast = PodcastBottomDialogFragment.newInstance(list.get(position).getId());
                 bottomPodcast.show(((MainActivity)context).getSupportFragmentManager(), PodcastBottomDialogFragment.class.getName());
             }
         });

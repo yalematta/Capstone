@@ -22,6 +22,9 @@ public interface ApiInterface {
     @GET("feature/podcast/hot/languages")
     Call<BaseListResponse<String>> getFeaturedLanguages();
 
+    @GET("podcast")
+    Call<BaseResponse<Podcast>> getPodcastDetails(@Query("podcast_id") int podcastID);
+
     @GET("podcasts")
     Call<BaseListResponse<Podcast>> getAllPodcasts(@Query("page") int page, @Query("count") int count);
 
