@@ -63,10 +63,7 @@
         app:backgroundTint="@color/colorPrimaryDark"
         app:elevation="7dp"
         android:layout_margin="20dp"
-        android:src="@android:drawable/ic_dialog_email"
-        app:layout_anchorGravity="bottom|right|end" />
-
-
-
+        app:layout_anchorGravity="bottom|right|end"
+        app:srcCompat="@drawable/ic_add_animation"/>
 
 </android.support.design.widget.CoordinatorLayout>

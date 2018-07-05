@@ -1,5 +1,7 @@
 package com.yalematta.earcasts.ui.details.podcasts;
 
+import android.graphics.drawable.Animatable;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.BottomSheetDialogFragment;
@@ -66,6 +68,12 @@ public class PodcastBottomDialogFragment extends BottomSheetDialogFragment imple
             mPodcastId = getPodcastId();
             mPresenter.getPodcastData(mPodcastId);
         }
+
+        Drawable drawable = fab.getDrawable();
+        if (drawable instanceof Animatable) {
+            ((Animatable) drawable).start();
+        }
+
         return view;
     }
 
