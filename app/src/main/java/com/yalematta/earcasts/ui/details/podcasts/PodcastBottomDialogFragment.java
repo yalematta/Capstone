@@ -1,7 +1,6 @@
 package com.yalematta.earcasts.ui.details.podcasts;
 
-import android.graphics.drawable.Animatable;
-import android.graphics.drawable.Drawable;
+import android.graphics.drawable.AnimatedVectorDrawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.BottomSheetDialogFragment;
@@ -25,11 +24,15 @@ import butterknife.ButterKnife;
  * Created by yalematta on 6/26/18.
  */
 
-public class PodcastBottomDialogFragment extends BottomSheetDialogFragment implements PodcastBottomDialogContract.View {
+public class PodcastBottomDialogFragment extends BottomSheetDialogFragment implements PodcastBottomDialogContract.View, View.OnClickListener {
 
     private int mPodcastId;
     private static final String PODCAST_ID = "PODCAST_ID";
     private PodcastBottomDialogContract.Presenter mPresenter;
+
+    private AnimatedVectorDrawable mAddDrawable;
+    private AnimatedVectorDrawable mCheckDrawable;
+    private boolean mFabFlag;
 
     @BindView(R.id.image)
     ImageView ivLogo;
@@ -69,12 +72,23 @@ public class PodcastBottomDialogFragment extends BottomSheetDialogFragment imple
             mPresenter.getPodcastData(mPodcastId);
         }
 
-        Drawable drawable = fab.getDrawable();
-        if (drawable instanceof Animatable) {
-            ((Animatable) drawable).start();
-        }
+        mAddDrawable = (AnimatedVectorDrawable) getContext().getDrawable(R.drawable.ic_add_animatable);
+        mCheckDrawable = (AnimatedVectorDrawable) getContext().getDrawable(R.drawable.ic_check_animatable);
+
+        fab.setOnClickListener(this);
 
         return view;
+    }
+
+    public void fabClick() {
+        if (mFabFlag) {
+            fab.setImageDrawable(mCheckDrawable);
+            mCheckDrawable.start();
+        } else {
+            fab.setImageDrawable(mAddDrawable);
+            mAddDrawable.start();
+        }
+        mFabFlag = !mFabFlag;
     }
 
     @Override
@@ -100,5 +114,13 @@ public class PodcastBottomDialogFragment extends BottomSheetDialogFragment imple
     @Override
     public void onGetDataFailure(String message) {
         Log.d("Status", message);
+    }
+
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()){
+            case R.id.fab:
+                fabClick();
+        }
     }
 }

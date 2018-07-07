@@ -76,6 +76,6 @@
         app:elevation="7dp"
         android:layout_margin="20dp"
         app:layout_anchorGravity="bottom|right|end"
-        app:srcCompat="@drawable/ic_add_animation"/>
+        android:src="@drawable/ic_add_vector"/>
 
 </android.support.design.widget.CoordinatorLayout>
