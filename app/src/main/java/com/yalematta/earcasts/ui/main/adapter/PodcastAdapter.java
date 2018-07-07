@@ -2,6 +2,8 @@ package com.yalematta.earcasts.ui.main.adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.transition.Transition;
+import android.transition.TransitionInflater;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;

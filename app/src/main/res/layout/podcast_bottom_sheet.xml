@@ -47,7 +47,6 @@
                 android:paddingEnd="15dp"
                 android:paddingStart="15dp"
                 android:id="@+id/subtitle"
-                android:text="@string/subtitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@color/colorPrimaryLight2"/>

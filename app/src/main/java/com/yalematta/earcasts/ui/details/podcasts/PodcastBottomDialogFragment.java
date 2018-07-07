@@ -38,6 +38,8 @@ public class PodcastBottomDialogFragment extends BottomSheetDialogFragment imple
     ImageView ivLogo;
     @BindView(R.id.title)
     TextView tvTitle;
+    @BindView(R.id.subtitle)
+    TextView tvSubtitle;
     @BindView(R.id.fab)
     FloatingActionButton fab;
     @BindView(R.id.description)
@@ -104,6 +106,7 @@ public class PodcastBottomDialogFragment extends BottomSheetDialogFragment imple
     @Override
     public void onGetDataSuccess(String message, Podcast podcast) {
         tvTitle.setText(podcast.getTitle());
+        tvSubtitle.setText(getString(R.string.subtitle));
         tvDescription.setText(podcast.getSubtitle());
 
         Glide.with(getActivity())

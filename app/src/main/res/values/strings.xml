@@ -4,6 +4,9 @@
     <string name="description">Description</string>
 
 
+    <!-- Transitions -->
+    <string name="transition_photo">Transition Photo</string>
+
 
     <!-- SVG -->
     <string name="add_vector_path" translatable="false">M50 20,L50 80,M20 50,L80 50</string>
