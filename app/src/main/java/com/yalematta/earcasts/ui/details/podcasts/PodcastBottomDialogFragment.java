@@ -90,7 +90,7 @@ public class PodcastBottomDialogFragment extends BottomSheetDialogFragment imple
     @Override
     public void onGetDataSuccess(String message, Podcast podcast) {
         tvTitle.setText(podcast.getTitle());
-        tvDescription.setText(podcast.getDescription());
+        tvDescription.setText(podcast.getSubtitle());
 
         Glide.with(getActivity())
                 .load(podcast.getSmallImageURL())
