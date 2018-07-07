@@ -1,5 +1,6 @@
-package com.yalematta.earcasts.ui.details.podcasts;
+package com.yalematta.earcasts.ui.podcasts.details;
 
+import android.content.Intent;
 import android.graphics.drawable.AnimatedVectorDrawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -16,6 +17,7 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.yalematta.earcasts.R;
 import com.yalematta.earcasts.data.models.podcast.Podcast;
+import com.yalematta.earcasts.ui.podcasts.episodes.PodcastActivity;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -27,7 +29,9 @@ import butterknife.ButterKnife;
 public class PodcastBottomDialogFragment extends BottomSheetDialogFragment implements PodcastBottomDialogContract.View, View.OnClickListener {
 
     private int mPodcastId;
+    private Podcast selectedPodcast;
     private static final String PODCAST_ID = "PODCAST_ID";
+    private static final String PODCAST = "PODCAST";
     private PodcastBottomDialogContract.Presenter mPresenter;
 
     private AnimatedVectorDrawable mAddDrawable;
@@ -84,13 +88,17 @@ public class PodcastBottomDialogFragment extends BottomSheetDialogFragment imple
 
     public void fabClick() {
         if (mFabFlag) {
-            fab.setImageDrawable(mCheckDrawable);
-            mCheckDrawable.start();
+            Intent intent = new Intent(getContext(), PodcastActivity.class);
+            Bundle mBundle = new Bundle();
+            mBundle.putInt(PODCAST_ID, mPodcastId);
+            mBundle.putParcelable(PODCAST, selectedPodcast);
+            intent.putExtras(mBundle);
+            startActivity(intent);
         } else {
             fab.setImageDrawable(mAddDrawable);
             mAddDrawable.start();
+            mFabFlag = !mFabFlag;
         }
-        mFabFlag = !mFabFlag;
     }
 
     @Override
@@ -105,6 +113,10 @@ public class PodcastBottomDialogFragment extends BottomSheetDialogFragment imple
 
     @Override
     public void onGetDataSuccess(String message, Podcast podcast) {
+
+        selectedPodcast = new Podcast();
+        selectedPodcast = podcast;
+
         tvTitle.setText(podcast.getTitle());
         tvSubtitle.setText(getString(R.string.subtitle));
         tvDescription.setText(podcast.getSubtitle());

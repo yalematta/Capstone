@@ -6,7 +6,7 @@ import com.yalematta.earcasts.data.models.BaseListResponse;
 import com.yalematta.earcasts.data.models.BaseResponse;
 import com.yalematta.earcasts.data.models.category.Category;
 import com.yalematta.earcasts.data.models.podcast.Podcast;
-import com.yalematta.earcasts.ui.details.podcasts.PodcastBottomDialogContract;
+import com.yalematta.earcasts.ui.podcasts.details.PodcastBottomDialogContract;
 import com.yalematta.earcasts.ui.main.categories.CategoriesContract;
 import com.yalematta.earcasts.ui.main.featured.FeaturedContract;
 

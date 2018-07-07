@@ -2,8 +2,6 @@ package com.yalematta.earcasts.ui.main.adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
-import android.transition.Transition;
-import android.transition.TransitionInflater;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,10 +11,9 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.yalematta.earcasts.R;
 import com.yalematta.earcasts.data.models.podcast.Podcast;
-import com.yalematta.earcasts.ui.details.podcasts.PodcastBottomDialogFragment;
-import com.yalematta.earcasts.ui.details.podcasts.PodcastBottomDialogPresenterImpl;
+import com.yalematta.earcasts.ui.podcasts.details.PodcastBottomDialogFragment;
+import com.yalematta.earcasts.ui.podcasts.details.PodcastBottomDialogPresenterImpl;
 import com.yalematta.earcasts.ui.main.MainActivity;
-import com.yalematta.earcasts.ui.main.featured.FeaturedPresenterImpl;
 
 import java.util.ArrayList;
 import java.util.List;

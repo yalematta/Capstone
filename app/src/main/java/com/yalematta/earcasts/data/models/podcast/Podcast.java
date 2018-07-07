@@ -1,14 +1,18 @@
 package com.yalematta.earcasts.data.models.podcast;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.google.gson.annotations.SerializedName;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Created by yalematta on 6/15/18.
  */
 
-public class Podcast {
+public class Podcast implements Parcelable {
 
     @SerializedName("title")
     public String title;
@@ -52,6 +56,10 @@ public class Podcast {
     public int episodeCount;
 //  @SerializedName("episodes")
 //  public List<Episode> episodes = null;
+
+    public Podcast() {
+
+    }
 
     public String getTitle() {
         return title;
@@ -216,4 +224,70 @@ public class Podcast {
 //  public List<Episode> getEpisodes() { return episodes; }
 //
 //  public void setEpisodes(List<Episode> episodes) { this.episodes = episodes; }
+
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(this.title);
+        dest.writeInt(this.id);
+        dest.writeString(this.xmlURL);
+        dest.writeString(this.htmlURL);
+        dest.writeString(this.imgURL);
+        dest.writeInt(this.status);
+        dest.writeString(this.slug);
+        dest.writeString(this.layoutImageURL);
+        dest.writeString(this.thumbImageURL);
+        dest.writeString(this.smallImageURL);
+        dest.writeString(this.microImageURL);
+        dest.writeString(this.language);
+        dest.writeString(this.lastpoll);
+        dest.writeList(this.categories);
+        dest.writeString(this.lastpub);
+        dest.writeInt(this.rank);
+        dest.writeString(this.urlFyyd);
+        dest.writeString(this.description);
+        dest.writeString(this.subtitle);
+        dest.writeInt(this.episodeCount);
+    }
+
+    protected Podcast(Parcel in) {
+        this.title = in.readString();
+        this.id = in.readInt();
+        this.xmlURL = in.readString();
+        this.htmlURL = in.readString();
+        this.imgURL = in.readString();
+        this.status = in.readInt();
+        this.slug = in.readString();
+        this.layoutImageURL = in.readString();
+        this.thumbImageURL = in.readString();
+        this.smallImageURL = in.readString();
+        this.microImageURL = in.readString();
+        this.language = in.readString();
+        this.lastpoll = in.readString();
+        this.categories = new ArrayList<Integer>();
+        in.readList(this.categories, Integer.class.getClassLoader());
+        this.lastpub = in.readString();
+        this.rank = in.readInt();
+        this.urlFyyd = in.readString();
+        this.description = in.readString();
+        this.subtitle = in.readString();
+        this.episodeCount = in.readInt();
+    }
+
+    public static final Parcelable.Creator<Podcast> CREATOR = new Parcelable.Creator<Podcast>() {
+        @Override
+        public Podcast createFromParcel(Parcel source) {
+            return new Podcast(source);
+        }
+
+        @Override
+        public Podcast[] newArray(int size) {
+            return new Podcast[size];
+        }
+    };
 }

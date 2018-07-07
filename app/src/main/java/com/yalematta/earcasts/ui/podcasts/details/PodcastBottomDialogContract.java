@@ -1,4 +1,4 @@
-package com.yalematta.earcasts.ui.details.podcasts;
+package com.yalematta.earcasts.ui.podcasts.details;
 
 import com.yalematta.earcasts.BasePresenter;
 import com.yalematta.earcasts.BaseView;
