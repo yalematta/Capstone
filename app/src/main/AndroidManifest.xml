@@ -19,7 +19,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ui.podcasts.episodes.PodcastActivity"
+            android:name=".ui.podcasts.episodes.PodcastEpisodesActivity"
             android:label="@string/title_activity_podcast"
             android:theme="@style/AppTheme"></activity>
     </application>

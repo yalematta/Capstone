@@ -54,8 +54,8 @@ public class Podcast implements Parcelable {
     public String subtitle;
     @SerializedName("episode_count")
     public int episodeCount;
-//  @SerializedName("episodes")
-//  public List<Episode> episodes = null;
+    @SerializedName("episodes")
+    public List<Episode> episodes = null;
 
     public Podcast() {
 
@@ -221,9 +221,9 @@ public class Podcast implements Parcelable {
         this.episodeCount = episodeCount;
     }
 
-//  public List<Episode> getEpisodes() { return episodes; }
-//
-//  public void setEpisodes(List<Episode> episodes) { this.episodes = episodes; }
+    public List<Episode> getEpisodes() { return episodes; }
+
+    public void setEpisodes(List<Episode> episodes) { this.episodes = episodes; }
 
 
     @Override
@@ -253,6 +253,7 @@ public class Podcast implements Parcelable {
         dest.writeString(this.description);
         dest.writeString(this.subtitle);
         dest.writeInt(this.episodeCount);
+        dest.writeList(this.episodes);
     }
 
     protected Podcast(Parcel in) {
@@ -277,9 +278,11 @@ public class Podcast implements Parcelable {
         this.description = in.readString();
         this.subtitle = in.readString();
         this.episodeCount = in.readInt();
+        this.episodes = new ArrayList<Episode>();
+        in.readList(this.episodes, Episode.class.getClassLoader());
     }
 
-    public static final Parcelable.Creator<Podcast> CREATOR = new Parcelable.Creator<Podcast>() {
+    public static final Creator<Podcast> CREATOR = new Creator<Podcast>() {
         @Override
         public Podcast createFromParcel(Parcel source) {
             return new Podcast(source);

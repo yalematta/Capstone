@@ -5,10 +5,12 @@ import android.util.Log;
 import com.yalematta.earcasts.data.models.BaseListResponse;
 import com.yalematta.earcasts.data.models.BaseResponse;
 import com.yalematta.earcasts.data.models.category.Category;
+import com.yalematta.earcasts.data.models.podcast.Episode;
 import com.yalematta.earcasts.data.models.podcast.Podcast;
 import com.yalematta.earcasts.ui.podcasts.details.PodcastBottomDialogContract;
 import com.yalematta.earcasts.ui.main.categories.CategoriesContract;
 import com.yalematta.earcasts.ui.main.featured.FeaturedContract;
+import com.yalematta.earcasts.ui.podcasts.episodes.PodcastEpisodesContract;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -22,16 +24,18 @@ import retrofit2.Response;
  * Created by yalematta on 6/17/18.
  */
 
-public class Interactor implements FeaturedContract.Interactor, CategoriesContract.Interactor, PodcastBottomDialogContract.Interactor {
+public class Interactor implements FeaturedContract.Interactor, CategoriesContract.Interactor, PodcastBottomDialogContract.Interactor, PodcastEpisodesContract.Interactor {
 
     private FeaturedContract.onGetDataListener mOnGetPodcastsListener;
     private CategoriesContract.onGetDataListener mOnGetCategoriesListener;
     private PodcastBottomDialogContract.onGetDataListener mOnGetPodcastBottomDialogListener;
+    private PodcastEpisodesContract.onGetDataListener mOnGetPodcastEpisodesListener;
 
     Podcast selectedPodcast = new Podcast();
     List<Podcast> allPodcasts = new ArrayList<>();
     List<String> categoriesList = new ArrayList<>();
     List<Category> allCategories = new ArrayList<>();
+    List<Episode> podcastEpisodes = new ArrayList<>();
     HashMap<Integer, String> categoriesMap = new HashMap<>();
 
     public Interactor(FeaturedContract.onGetDataListener onGetPodcastsListener) {
@@ -44,6 +48,10 @@ public class Interactor implements FeaturedContract.Interactor, CategoriesContra
 
     public Interactor(PodcastBottomDialogContract.onGetDataListener onGetPodcastBottomDialogListener) {
         this.mOnGetPodcastBottomDialogListener = onGetPodcastBottomDialogListener;
+    }
+
+    public Interactor(PodcastEpisodesContract.onGetDataListener onGetPodcastEpisodesListener) {
+        this.mOnGetPodcastEpisodesListener = onGetPodcastEpisodesListener;
     }
 
     //region All Podcasts
@@ -166,6 +174,33 @@ public class Interactor implements FeaturedContract.Interactor, CategoriesContra
             public void onFailure(Call<BaseResponse<Podcast>> call, Throwable t) {
                 Log.v("Error", t.getMessage());
                 mOnGetPodcastBottomDialogListener.onFailure(t.getMessage());
+            }
+        });
+    }
+    //endregion
+
+    //region Podcast Episodes
+    @Override
+    public void getPodcastEpisodes(int podcastId, int currentPage, int episodeCount) {
+        Call<BaseResponse<Podcast>> call = ApiClient.getClient().getApiInterface().getPodcastEpisodes(podcastId, currentPage, episodeCount);
+        call.enqueue(new Callback<BaseResponse<Podcast>>() {
+
+            @Override
+            public void onResponse(Call<BaseResponse<Podcast>> call, Response<BaseResponse<Podcast>> response) {
+                if (response.isSuccessful()) {
+                    podcastEpisodes = response.body().data.getEpisodes();
+                    Log.d("Data", "Refreshed");
+                    mOnGetPodcastEpisodesListener.onSuccess("Episodes Size: " + podcastEpisodes.size(), podcastEpisodes);
+
+                } else {
+                    Log.v("Error", "401 authentication error");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<BaseResponse<Podcast>> call, Throwable t) {
+                Log.v("Error", t.getMessage());
+                mOnGetPodcastEpisodesListener.onFailure(t.getMessage());
             }
         });
     }

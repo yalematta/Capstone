@@ -17,7 +17,7 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.yalematta.earcasts.R;
 import com.yalematta.earcasts.data.models.podcast.Podcast;
-import com.yalematta.earcasts.ui.podcasts.episodes.PodcastActivity;
+import com.yalematta.earcasts.ui.podcasts.episodes.PodcastEpisodesActivity;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -30,8 +30,8 @@ public class PodcastBottomDialogFragment extends BottomSheetDialogFragment imple
 
     private int mPodcastId;
     private Podcast selectedPodcast;
-    private static final String PODCAST_ID = "PODCAST_ID";
     private static final String PODCAST = "PODCAST";
+    private static final String PODCAST_ID = "PODCAST_ID";
     private PodcastBottomDialogContract.Presenter mPresenter;
 
     private AnimatedVectorDrawable mAddDrawable;
@@ -88,7 +88,7 @@ public class PodcastBottomDialogFragment extends BottomSheetDialogFragment imple
 
     public void fabClick() {
         if (mFabFlag) {
-            Intent intent = new Intent(getContext(), PodcastActivity.class);
+            Intent intent = new Intent(getContext(), PodcastEpisodesActivity.class);
             Bundle mBundle = new Bundle();
             mBundle.putInt(PODCAST_ID, mPodcastId);
             mBundle.putParcelable(PODCAST, selectedPodcast);
