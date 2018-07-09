@@ -147,6 +147,7 @@ public class Interactor implements FeaturedContract.Interactor, CategoriesContra
             @Override
             public void onFailure(Call<BaseListResponse<Category>> call, Throwable t) {
                 Log.v("Error", t.getMessage());
+
                 mOnGetCategoriesListener.onFailure(t.getMessage());
             }
         });

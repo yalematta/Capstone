@@ -80,7 +80,9 @@ public class PodcastEpisodesActivity extends AppCompatActivity implements Podcas
             }
         });
 
-        mPresenter.getEpisodes(currentPodcast.getId(), 1, 10);
+        if( currentPodcast != null && currentPodcast.getId() != 0) {
+            mPresenter.getEpisodes(currentPodcast.getId(), 0, 10);
+        }
 
         episodeAdapter = new EpisodeAdapter(this, currentPodcast.getEpisodes());
         recyclerView.setAdapter(episodeAdapter);
