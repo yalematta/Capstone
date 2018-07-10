@@ -3,11 +3,13 @@ package com.yalematta.earcasts.ui.podcasts.episodes;
 import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
@@ -21,15 +23,14 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class PodcastEpisodesActivity extends AppCompatActivity implements PodcastEpisodesContract.View {
+public class PodcastEpisodesActivity extends AppCompatActivity {
 
     private Podcast currentPodcast;
-    private EpisodeAdapter episodeAdapter;
     private static final String PODCAST = "PODCAST";
-    private PodcastEpisodesContract.Presenter mPresenter;
+
 
     @BindView(R.id.toolbar_layout) CollapsingToolbarLayout collapsedToolbar;
-    @BindView(R.id.recycler_view) RecyclerView recyclerView;
+    @BindView(R.id.frame_layout) FrameLayout frameLayout;
     @BindView(R.id.app_bar) AppBarLayout appBarLayout;
     @BindView(R.id.expanded_image) ImageView ivLogo;
     @BindView(R.id.toolbar) Toolbar toolbar;
@@ -44,17 +45,19 @@ public class PodcastEpisodesActivity extends AppCompatActivity implements Podcas
         initView();
     }
 
-    @Override
-    public void setPresenter(PodcastEpisodesContract.Presenter presenter) {
-        mPresenter = presenter;
-    }
-
     private void initView() {
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
 
         currentPodcast = getIntent().getParcelableExtra(PODCAST);
+        PodcastEpisodesFragment fragment = new PodcastEpisodesFragment();
+        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+        Bundle bundle = new Bundle();
+        bundle.putParcelable(PODCAST, currentPodcast);
+        fragment.setArguments(bundle);
+        ft.replace(R.id.frame_layout, fragment);
+        ft.commit();
 
         Glide.with(this)
                 .load(currentPodcast.getSmallImageURL())
@@ -80,12 +83,6 @@ public class PodcastEpisodesActivity extends AppCompatActivity implements Podcas
             }
         });
 
-        if( currentPodcast != null && currentPodcast.getId() != 0) {
-            mPresenter.getEpisodes(currentPodcast.getId(), 0, 10);
-        }
-
-        episodeAdapter = new EpisodeAdapter(this, currentPodcast.getEpisodes());
-        recyclerView.setAdapter(episodeAdapter);
     }
 
     @Override
@@ -96,21 +93,5 @@ public class PodcastEpisodesActivity extends AppCompatActivity implements Podcas
                 return true;
         }
         return super.onOptionsItemSelected(item);
-    }
-
-    @Override
-    public void ShowToast(String text) {
-
-    }
-
-    @Override
-    public void onGetDataSuccess(String message, List<Episode> list) {
-        episodeAdapter = new EpisodeAdapter(this, list);
-        recyclerView.setAdapter(episodeAdapter);
-    }
-
-    @Override
-    public void onGetDataFailure(String message) {
-        Log.d("Status", message);
     }
 }

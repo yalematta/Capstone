@@ -25,19 +25,11 @@ import butterknife.ButterKnife;
 
 public class CategoriesTabFragment extends Fragment implements CategoriesContract.View {
 
-    private static final String TAG = CategoriesTabFragment.class.getSimpleName();
-
     private CategoriesContract.Presenter mPresenter;
     private ArrayAdapter<String> categoriesAdapter;
 
-    @BindView(R.id.list_view)
-    ListView listView;
-    @BindView(R.id.empty_view)
-    TextView tvEmptyView;
-
-    public CategoriesTabFragment() {
-
-    }
+    @BindView(R.id.list_view) ListView listView;
+    @BindView(R.id.empty_view) TextView tvEmptyView;
 
     public static CategoriesTabFragment newInstance() {
         return new CategoriesTabFragment();

@@ -21,6 +21,11 @@ public class PodcastEpisodesPresenterImpl implements PodcastEpisodesContract.Pre
     }
 
     @Override
+    public void getEpisodes(int podcastId, int currentPage, int episodeCount) {
+        mIntractor.getPodcastEpisodes(podcastId, currentPage, episodeCount);
+    }
+
+    @Override
     public void onSuccess(String message, List<Episode> episodes) {
         mPodcastEpisodesContractView.onGetDataSuccess(message, episodes);
     }
@@ -28,10 +33,5 @@ public class PodcastEpisodesPresenterImpl implements PodcastEpisodesContract.Pre
     @Override
     public void onFailure(String message) {
         mPodcastEpisodesContractView.onGetDataFailure(message);
-    }
-
-    @Override
-    public void getEpisodes(int podcastId, int currentPage, int episodeCount) {
-        mIntractor.getPodcastEpisodes(podcastId, currentPage, episodeCount);
     }
 }

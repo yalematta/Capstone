@@ -1,7 +1,5 @@
 package com.yalematta.earcasts.ui.podcasts.episodes;
 
-import android.widget.ListView;
-
 import com.yalematta.earcasts.BasePresenter;
 import com.yalematta.earcasts.BaseView;
 import com.yalematta.earcasts.data.models.podcast.Episode;
@@ -15,7 +13,7 @@ import java.util.List;
 
 public interface PodcastEpisodesContract {
 
-    interface View extends BaseView<PodcastEpisodesContract.Presenter> {
+    interface View extends BaseView<Presenter> {
         void onGetDataSuccess(String message, List<Episode> episodes);
         void onGetDataFailure(String message);
     }
