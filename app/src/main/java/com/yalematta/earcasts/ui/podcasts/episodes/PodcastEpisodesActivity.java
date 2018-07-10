@@ -1,10 +1,17 @@
 package com.yalematta.earcasts.ui.podcasts.episodes;
 
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.graphics.Palette;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -13,6 +20,10 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.DataSource;
+import com.bumptech.glide.load.engine.GlideException;
+import com.bumptech.glide.request.RequestListener;
+import com.bumptech.glide.request.target.Target;
 import com.yalematta.earcasts.R;
 import com.yalematta.earcasts.data.models.podcast.Episode;
 import com.yalematta.earcasts.data.models.podcast.Podcast;
@@ -60,7 +71,28 @@ public class PodcastEpisodesActivity extends AppCompatActivity {
         ft.commit();
 
         Glide.with(this)
+                .asDrawable()
                 .load(currentPodcast.getSmallImageURL())
+                .listener(new RequestListener() {
+                    @Override
+                    public boolean onLoadFailed(@Nullable GlideException e, Object model, Target target, boolean isFirstResource) {
+                        return false;
+                    }
+
+                    @Override
+                    public boolean onResourceReady(Object resource, Object model, Target target, DataSource dataSource, boolean isFirstResource) {
+                        Bitmap bitmap = ((BitmapDrawable) resource).getBitmap();
+                        Palette p = createPaletteSync(bitmap);
+                        Palette.Swatch dominantSwatch = p.getDominantSwatch();
+
+                        if(dominantSwatch != null){
+                            int backgroundColor = dominantSwatch.getRgb();
+                            appBarLayout.setBackgroundColor(backgroundColor);
+                            toolbar.setBackgroundColor(backgroundColor);
+                        }
+                        return false;
+                    }
+                })
                 .into(ivLogo);
 
         appBarLayout.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
@@ -83,6 +115,11 @@ public class PodcastEpisodesActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    public Palette createPaletteSync(Bitmap bitmap) {
+        Palette p = Palette.from(bitmap).generate();
+        return p;
     }
 
     @Override
