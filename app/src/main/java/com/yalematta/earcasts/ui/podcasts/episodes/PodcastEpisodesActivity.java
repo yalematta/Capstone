@@ -38,8 +38,7 @@ public class PodcastEpisodesActivity extends AppCompatActivity {
 
     private Podcast currentPodcast;
     private static final String PODCAST = "PODCAST";
-
-
+    
     @BindView(R.id.toolbar_layout) CollapsingToolbarLayout collapsedToolbar;
     @BindView(R.id.frame_layout) FrameLayout frameLayout;
     @BindView(R.id.app_bar) AppBarLayout appBarLayout;
