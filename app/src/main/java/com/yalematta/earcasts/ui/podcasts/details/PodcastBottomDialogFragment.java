@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.graphics.drawable.AnimatedVectorDrawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.BottomSheetBehavior;
 import android.support.design.widget.BottomSheetDialogFragment;
 import android.support.design.widget.FloatingActionButton;
 import android.util.Log;
@@ -30,6 +31,7 @@ public class PodcastBottomDialogFragment extends BottomSheetDialogFragment imple
 
     private int mPodcastId;
     private Podcast selectedPodcast;
+    private BottomSheetBehavior mBehavior;
     private static final String PODCAST = "PODCAST";
     private static final String PODCAST_ID = "PODCAST_ID";
     private PodcastBottomDialogContract.Presenter mPresenter;
