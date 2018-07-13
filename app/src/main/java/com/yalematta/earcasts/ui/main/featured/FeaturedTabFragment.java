@@ -9,9 +9,9 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 import android.widget.Toast;
 
+import com.github.ybq.android.spinkit.SpinKitView;
 import com.yalematta.earcasts.R;
 import com.yalematta.earcasts.data.models.podcast.Podcast;
 import com.yalematta.earcasts.ui.main.adapter.PodcastAdapter;
@@ -32,7 +32,7 @@ public class FeaturedTabFragment extends Fragment implements FeaturedContract.Vi
     private FeaturedContract.Presenter mPresenter;
 
     @BindView(R.id.recycler_view) RecyclerView recyclerView;
-    @BindView(R.id.empty_view) TextView tvEmptyView;
+    @BindView(R.id.spin_kit) SpinKitView spinKit;
 
     private GridLayoutManager gridLayoutManager;
     private PodcastAdapter podcastAdapter;
@@ -112,6 +112,7 @@ public class FeaturedTabFragment extends Fragment implements FeaturedContract.Vi
     public void onGetDataSuccess(String message, List<Podcast> list) {
         podcastAdapter = new PodcastAdapter(getContext(), list);
         recyclerView.setAdapter(podcastAdapter);
+        spinKit.setVisibility(View.GONE);
     }
 
     @Override
