@@ -13,15 +13,12 @@
         android:layout_margin="3dp"
         android:layout_weight="1"
         android:scrollbars="vertical"
-        android:layoutAnimation="@anim/grid_layout_animation_from_bottom" />
+        android:layoutAnimation="@anim/grid_layout_animation_from_right" />
 
-    <com.github.ybq.android.spinkit.SpinKitView
-        android:id="@+id/spin_kit"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        style="@style/SpinKitView.CubeGrid"
+    <ProgressBar
+        android:id="@+id/progress_bar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:SpinKit_Color="@color/colorAccent"
         android:layout_centerInParent="true" />
 
 </RelativeLayout>
