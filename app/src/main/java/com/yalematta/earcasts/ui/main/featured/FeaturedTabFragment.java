@@ -119,5 +119,6 @@ public class FeaturedTabFragment extends Fragment implements FeaturedContract.Vi
     public void onGetDataFailure(String message) {
         Log.d("Status", message);
     }
+
 }
 

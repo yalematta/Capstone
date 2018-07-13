@@ -3,8 +3,8 @@
     android:drawable="@drawable/ic_check_vector">
     <target
         android:name="remove"
-        android:animation="@anim/ic_check_morph"/>
+        android:animation="@animator/ic_check_morph"/>
     <target
         android:name="rotation"
-        android:animation="@anim/counter_clockwise_rotation"/>
+        android:animation="@animator/counter_clockwise_rotation"/>
 </animated-vector>
