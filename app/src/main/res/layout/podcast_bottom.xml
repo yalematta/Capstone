@@ -1,80 +1,86 @@
-<android.support.design.widget.CoordinatorLayout
+<com.flipboard.bottomsheet.BottomSheetLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/bottomsheet"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <LinearLayout
+    <android.support.design.widget.CoordinatorLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:layout_height="match_parent">
 
         <LinearLayout
-            android:id="@+id/LinearLayout1"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="horizontal"
-            android:background="@color/colorPrimaryLight"
-            android:layout_weight="50">
+            android:orientation="vertical">
 
-            <ImageView
-                android:padding="20dp"
-                android:id="@+id/image"
-                android:layout_width="150dp"
-                android:layout_height="150dp" />
-
-            <TextView
-                android:id="@+id/title"
-                android:paddingTop="30dp"
+            <LinearLayout
+                android:id="@+id/LinearLayout1"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textColor="@android:color/white"/>
+                android:layout_height="match_parent"
+                android:layout_weight="50"
+                android:background="@color/colorPrimaryLight"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:id="@+id/image"
+                    android:layout_width="150dp"
+                    android:layout_height="150dp"
+                    android:padding="20dp" />
+
+                <TextView
+                    android:id="@+id/title"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="30dp"
+                    android:textColor="@android:color/white" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/LinearLayout2"
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+                android:layout_weight="50"
+                android:background="@color/colorPrimary"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/subtitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:maxLines="5"
+                    android:paddingEnd="15dp"
+                    android:paddingStart="15dp"
+                    android:paddingTop="25dp"
+                    android:textColor="@color/colorPrimaryLight2"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/description"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:maxLines="5"
+                    android:paddingEnd="15dp"
+                    android:paddingStart="15dp"
+                    android:paddingTop="5dp"
+                    android:textColor="@android:color/white" />
+
+            </LinearLayout>
 
         </LinearLayout>
 
-        <LinearLayout
-            android:id="@+id/LinearLayout2"
-            android:layout_width="match_parent"
-            android:layout_height="150dp"
-            android:orientation="vertical"
-            android:layout_weight="50"
-            android:background="@color/colorPrimary">
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/fab"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="20dp"
+            android:src="@drawable/ic_add_vector"
+            app:backgroundTint="@color/colorAccent"
+            app:elevation="7dp"
+            app:layout_anchor="@id/LinearLayout1"
+            app:layout_anchorGravity="bottom|right|end" />
 
-            <TextView
-                android:maxLines="5"
-                android:textStyle="bold"
-                android:paddingTop="25dp"
-                android:paddingEnd="15dp"
-                android:paddingStart="15dp"
-                android:id="@+id/subtitle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="@color/colorPrimaryLight2"/>
-
-            <TextView
-                android:maxLines="5"
-                android:ellipsize="end"
-                android:paddingTop="5dp"
-                android:paddingEnd="15dp"
-                android:paddingStart="15dp"
-                android:id="@+id/description"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="@android:color/white"/>
-
-        </LinearLayout>
-
-    </LinearLayout>
-
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/fab"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_anchor="@id/LinearLayout1"
-        app:backgroundTint="@color/colorAccent"
-        app:elevation="7dp"
-        android:layout_margin="20dp"
-        app:layout_anchorGravity="bottom|right|end"
-        android:src="@drawable/ic_add_vector"/>
-
-</android.support.design.widget.CoordinatorLayout>
+    </android.support.design.widget.CoordinatorLayout>
+</com.flipboard.bottomsheet.BottomSheetLayout>

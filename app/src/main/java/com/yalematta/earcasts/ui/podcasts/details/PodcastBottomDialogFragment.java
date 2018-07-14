@@ -1,21 +1,29 @@
 package com.yalematta.earcasts.ui.podcasts.details;
 
+import android.annotation.SuppressLint;
+import android.app.Dialog;
 import android.content.Intent;
 import android.graphics.drawable.AnimatedVectorDrawable;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.BottomSheetBehavior;
 import android.support.design.widget.BottomSheetDialogFragment;
+import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.flipboard.bottomsheet.BottomSheetLayout;
 import com.yalematta.earcasts.R;
 import com.yalematta.earcasts.data.models.podcast.Podcast;
 import com.yalematta.earcasts.ui.podcasts.episodes.PodcastEpisodesActivity;
@@ -27,11 +35,10 @@ import butterknife.ButterKnife;
  * Created by yalematta on 6/26/18.
  */
 
-public class PodcastBottomDialogFragment extends BottomSheetDialogFragment implements PodcastBottomDialogContract.View, View.OnClickListener {
+public class PodcastBottomDialogFragment extends Fragment implements PodcastBottomDialogContract.View, View.OnClickListener {
 
     private int mPodcastId;
     private Podcast selectedPodcast;
-    private BottomSheetBehavior mBehavior;
     private static final String PODCAST = "PODCAST";
     private static final String PODCAST_ID = "PODCAST_ID";
     private PodcastBottomDialogContract.Presenter mPresenter;
@@ -40,16 +47,12 @@ public class PodcastBottomDialogFragment extends BottomSheetDialogFragment imple
     private AnimatedVectorDrawable mCheckDrawable;
     private boolean mFabFlag;
 
-    @BindView(R.id.image)
-    ImageView ivLogo;
-    @BindView(R.id.title)
-    TextView tvTitle;
-    @BindView(R.id.subtitle)
-    TextView tvSubtitle;
-    @BindView(R.id.fab)
-    FloatingActionButton fab;
-    @BindView(R.id.description)
-    TextView tvDescription;
+    @BindView(R.id.image) ImageView ivLogo;
+    @BindView(R.id.title) TextView tvTitle;
+    @BindView(R.id.subtitle) TextView tvSubtitle;
+    @BindView(R.id.fab) FloatingActionButton fab;
+    @BindView(R.id.description) TextView tvDescription;
+    @BindView(R.id.bottomSheetLayout) BottomSheetLayout bottomSheetLayout;
 
     public static PodcastBottomDialogFragment newInstance(int podcastId) {
         PodcastBottomDialogFragment fragment = new PodcastBottomDialogFragment();
@@ -69,12 +72,10 @@ public class PodcastBottomDialogFragment extends BottomSheetDialogFragment imple
 
     @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater,
-                             @Nullable ViewGroup container,
-                             @Nullable Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        View contentView = View.inflate(getContext(), R.layout.podcast_bottom, null);
 
-        View view = inflater.inflate(R.layout.podcast_bottom, container, false);
-        ButterKnife.bind(this, view);
+        ButterKnife.bind(this, contentView);
         if (getPodcastId() != 0) {
             mPodcastId = getPodcastId();
             mPresenter.getPodcastData(mPodcastId);
@@ -83,9 +84,11 @@ public class PodcastBottomDialogFragment extends BottomSheetDialogFragment imple
         mAddDrawable = (AnimatedVectorDrawable) getContext().getDrawable(R.drawable.ic_add_animatable);
         mCheckDrawable = (AnimatedVectorDrawable) getContext().getDrawable(R.drawable.ic_check_animatable);
 
+        bottomSheetLayout.showWithSheetView(LayoutInflater.from(getActivity()).inflate(R.layout.podcast_bottom, bottomSheetLayout, false));
+
         fab.setOnClickListener(this);
 
-        return view;
+        return contentView;
     }
 
     public void fabClick() {
@@ -139,5 +142,9 @@ public class PodcastBottomDialogFragment extends BottomSheetDialogFragment imple
             case R.id.fab:
                 fabClick();
         }
+    }
+
+    public void show(FragmentManager supportFragmentManager, String name) {
+
     }
 }

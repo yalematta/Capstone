@@ -3,14 +3,18 @@ package com.yalematta.earcasts.ui.podcasts.category;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.AppBarLayout;
+import android.support.design.widget.BottomSheetBehavior;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.graphics.Palette;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 
@@ -35,9 +39,10 @@ public class CategoryPodcastsActivity extends AppCompatActivity {
     private Category currentCategory;
     private static final String CATEGORY = "CATEGORY";
 
-    @BindView(R.id.frame_layout) FrameLayout frameLayout;
-    @BindView(R.id.app_bar) AppBarLayout appBarLayout;
-    @BindView(R.id.toolbar) Toolbar toolbar;
+    @BindView(R.id.app_bar)
+    AppBarLayout appBarLayout;
+    @BindView(R.id.toolbar)
+    Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,15 +67,18 @@ public class CategoryPodcastsActivity extends AppCompatActivity {
         fragment.setArguments(bundle);
         ft.replace(R.id.frame_layout, fragment);
         ft.commit();
+
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()){
+        switch (item.getItemId()) {
             case android.R.id.home:
                 onBackPressed();
                 return true;
         }
         return super.onOptionsItemSelected(item);
     }
+
+
 }
