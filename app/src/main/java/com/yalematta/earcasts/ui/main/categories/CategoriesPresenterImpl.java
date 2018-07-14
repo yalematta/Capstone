@@ -30,7 +30,7 @@ public class CategoriesPresenterImpl implements CategoriesContract.Presenter, Ca
 
 
     @Override
-    public void onSuccess(String message, List<String> categoriesList) {
+    public void onSuccess(String message, List<Category> categoriesList) {
         mCategoriesContractView.onGetDataSuccess(message, categoriesList);
     }
 

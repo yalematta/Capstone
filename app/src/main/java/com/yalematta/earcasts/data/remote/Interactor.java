@@ -33,10 +33,10 @@ public class Interactor implements FeaturedContract.Interactor, CategoriesContra
 
     Podcast selectedPodcast = new Podcast();
     List<Podcast> allPodcasts = new ArrayList<>();
-    List<String> categoriesList = new ArrayList<>();
+    List<Category> categoriesList = new ArrayList<>();
     List<Category> allCategories = new ArrayList<>();
     List<Episode> podcastEpisodes = new ArrayList<>();
-    HashMap<Integer, String> categoriesMap = new HashMap<>();
+    HashMap<Integer, Category> categoriesMap = new HashMap<>();
 
     public Interactor(FeaturedContract.onGetDataListener onGetPodcastsListener) {
         this.mOnGetPodcastsListener = onGetPodcastsListener;
@@ -122,17 +122,17 @@ public class Interactor implements FeaturedContract.Interactor, CategoriesContra
                     Log.d("Data", "Refreshed");
 
                     for (int i = 0; i < allCategories.size(); i++) {
-                        categoriesMap.put(allCategories.get(i).getId(), allCategories.get(i).getName());
+                        categoriesMap.put(allCategories.get(i).getId(), allCategories.get(i));
                         if (allCategories.get(i).getSubcategories().size() > 0) {
                             for (int j = 0; j < allCategories.get(i).getSubcategories().size(); j++) {
-                                categoriesMap.put(allCategories.get(i).getSubcategories().get(j).getId(), allCategories.get(i).getSubcategories().get(j).getName());
+                                categoriesMap.put(allCategories.get(i).getSubcategories().get(j).getId(), allCategories.get(i).getSubcategories().get(j));
                             }
                         }
                     }
 
                     for (int i = 0; i < categoriesMap.size(); i++) {
                         if (categoriesMap.get(i) != null)
-                            categoriesList.add(categoriesMap.get(i).toString());
+                            categoriesList.add(categoriesMap.get(i));
                     }
 
                 } else {

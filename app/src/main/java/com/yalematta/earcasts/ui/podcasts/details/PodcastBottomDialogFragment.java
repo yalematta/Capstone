@@ -73,7 +73,7 @@ public class PodcastBottomDialogFragment extends BottomSheetDialogFragment imple
                              @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
 
-        View view = inflater.inflate(R.layout.podcast_bottom_sheet, container, false);
+        View view = inflater.inflate(R.layout.podcast_bottom, container, false);
         ButterKnife.bind(this, view);
         if (getPodcastId() != 0) {
             mPodcastId = getPodcastId();

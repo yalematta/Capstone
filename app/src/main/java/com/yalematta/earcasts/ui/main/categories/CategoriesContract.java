@@ -15,7 +15,7 @@ import java.util.List;
 public interface CategoriesContract {
 
     interface View extends BaseView<Presenter> {
-        void onGetDataSuccess(String message, List<String> categoriesList);
+        void onGetDataSuccess(String message, List<Category> categoriesList);
         void onGetDataFailure(String message);
     }
 
@@ -28,7 +28,7 @@ public interface CategoriesContract {
     }
 
     interface onGetDataListener{
-        void onSuccess(String message,  List<String> categoriesList);
+        void onSuccess(String message,  List<Category> categoriesList);
         void onFailure(String message);
     }
 }

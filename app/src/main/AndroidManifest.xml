@@ -22,6 +22,10 @@
             android:name=".ui.podcasts.episodes.PodcastEpisodesActivity"
             android:label="@string/title_activity_podcast"
             android:theme="@style/AppTheme"></activity>
+        <activity
+            android:name=".ui.podcasts.category.CategoryPodcastsActivity"
+            android:label="@string/title_activity_podcast"
+            android:theme="@style/AppTheme"></activity>
     </application>
 
 </manifest>
