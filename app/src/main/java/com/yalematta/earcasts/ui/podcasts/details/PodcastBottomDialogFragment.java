@@ -77,9 +77,6 @@ public class PodcastBottomDialogFragment extends BottomSheetDialogFragment imple
         mAddDrawable = (AnimatedVectorDrawable) getContext().getDrawable(R.drawable.ic_add_animatable);
         mCheckDrawable = (AnimatedVectorDrawable) getContext().getDrawable(R.drawable.ic_check_animatable);
 
-        bottomSheetLayout.shouldDimContentView();
-        bottomSheetLayout.showWithSheetView(LayoutInflater.from(getActivity()).inflate(R.layout.podcast_bottom, bottomSheetLayout, false));
-
         fab.setOnClickListener(this);
 
         return contentView;

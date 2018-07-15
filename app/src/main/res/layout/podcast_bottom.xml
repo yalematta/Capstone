@@ -17,8 +17,7 @@
             <LinearLayout
                 android:id="@+id/LinearLayout1"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="50"
+                android:layout_height="150dp"
                 android:background="@color/colorPrimaryLight"
                 android:orientation="horizontal">
 
@@ -33,6 +32,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:paddingTop="30dp"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginEnd="5dp"
                     android:textColor="@android:color/white" />
 
             </LinearLayout>
@@ -40,8 +41,7 @@
             <LinearLayout
                 android:id="@+id/LinearLayout2"
                 android:layout_width="match_parent"
-                android:layout_height="150dp"
-                android:layout_weight="50"
+                android:layout_height="match_parent"
                 android:background="@color/colorPrimary"
                 android:orientation="vertical">
 
@@ -50,8 +50,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:maxLines="5"
-                    android:paddingEnd="15dp"
-                    android:paddingStart="15dp"
+                    android:paddingEnd="20dp"
+                    android:paddingStart="20dp"
                     android:paddingTop="25dp"
                     android:textColor="@color/colorPrimaryLight2"
                     android:textStyle="bold" />
@@ -62,8 +62,8 @@
                     android:layout_height="wrap_content"
                     android:ellipsize="end"
                     android:maxLines="5"
-                    android:paddingEnd="15dp"
-                    android:paddingStart="15dp"
+                    android:paddingEnd="20dp"
+                    android:paddingStart="20dp"
                     android:paddingTop="5dp"
                     android:textColor="@android:color/white" />
 
