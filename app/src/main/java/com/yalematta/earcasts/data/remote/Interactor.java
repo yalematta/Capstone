@@ -4,9 +4,11 @@ import android.util.Log;
 
 import com.yalematta.earcasts.data.models.BaseListResponse;
 import com.yalematta.earcasts.data.models.BaseResponse;
+import com.yalematta.earcasts.data.models.category.CatPodcasts;
 import com.yalematta.earcasts.data.models.category.Category;
 import com.yalematta.earcasts.data.models.podcast.Episode;
 import com.yalematta.earcasts.data.models.podcast.Podcast;
+import com.yalematta.earcasts.ui.podcasts.category.CategoryPodcastsContract;
 import com.yalematta.earcasts.ui.podcasts.details.PodcastBottomDialogContract;
 import com.yalematta.earcasts.ui.main.categories.CategoriesContract;
 import com.yalematta.earcasts.ui.main.featured.FeaturedContract;
@@ -24,18 +26,23 @@ import retrofit2.Response;
  * Created by yalematta on 6/17/18.
  */
 
-public class Interactor implements FeaturedContract.Interactor, CategoriesContract.Interactor, PodcastBottomDialogContract.Interactor, PodcastEpisodesContract.Interactor {
+public class Interactor implements FeaturedContract.Interactor, CategoriesContract.Interactor,
+        PodcastBottomDialogContract.Interactor, PodcastEpisodesContract.Interactor,
+        CategoryPodcastsContract.Interactor {
 
     private FeaturedContract.onGetDataListener mOnGetPodcastsListener;
     private CategoriesContract.onGetDataListener mOnGetCategoriesListener;
-    private PodcastBottomDialogContract.onGetDataListener mOnGetPodcastBottomDialogListener;
     private PodcastEpisodesContract.onGetDataListener mOnGetPodcastEpisodesListener;
+    private CategoryPodcastsContract.onGetDataListener mOnGetCategoryPodcastsListener;
+    private PodcastBottomDialogContract.onGetDataListener mOnGetPodcastBottomDialogListener;
+
 
     Podcast selectedPodcast = new Podcast();
     List<Podcast> allPodcasts = new ArrayList<>();
     List<Category> categoriesList = new ArrayList<>();
     List<Category> allCategories = new ArrayList<>();
     List<Episode> podcastEpisodes = new ArrayList<>();
+    List<Podcast> categoryPodcasts = new ArrayList<>();
     HashMap<Integer, Category> categoriesMap = new HashMap<>();
 
     public Interactor(FeaturedContract.onGetDataListener onGetPodcastsListener) {
@@ -52,6 +59,10 @@ public class Interactor implements FeaturedContract.Interactor, CategoriesContra
 
     public Interactor(PodcastEpisodesContract.onGetDataListener onGetPodcastEpisodesListener) {
         this.mOnGetPodcastEpisodesListener = onGetPodcastEpisodesListener;
+    }
+
+    public Interactor(CategoryPodcastsContract.onGetDataListener onGetCategoryPodcastsListener) {
+        this.mOnGetCategoryPodcastsListener = onGetCategoryPodcastsListener;
     }
 
     //region All Podcasts
@@ -202,6 +213,33 @@ public class Interactor implements FeaturedContract.Interactor, CategoriesContra
             public void onFailure(Call<BaseResponse<Podcast>> call, Throwable t) {
                 Log.v("Error", t.getMessage());
                 mOnGetPodcastEpisodesListener.onFailure(t.getMessage());
+            }
+        });
+    }
+    //endregion
+
+    //region Category Podcasts
+    @Override
+    public void getCategoryPodcasts(int categoryId, int page, int count) {
+        Call<BaseResponse<CatPodcasts>> call = ApiClient.getClient().getApiInterface().getPodcastsByCategory(categoryId, page, count);
+        call.enqueue(new Callback<BaseResponse<CatPodcasts>>() {
+
+            @Override
+            public void onResponse(Call<BaseResponse<CatPodcasts>> call, Response<BaseResponse<CatPodcasts>> response) {
+                if (response.isSuccessful()) {
+                    categoryPodcasts = response.body().data.getPodcasts();
+                    Log.d("Data", "Refreshed");
+                    mOnGetCategoryPodcastsListener.onSuccess("Podcasts size: " + categoryPodcasts.size(), categoryPodcasts);
+
+                } else {
+                    Log.v("Error", "401 authentication error");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<BaseResponse<CatPodcasts>> call, Throwable t) {
+                Log.v("Error", t.getMessage());
+                mOnGetCategoryPodcastsListener.onFailure(t.getMessage());
             }
         });
     }

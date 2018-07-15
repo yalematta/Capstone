@@ -9,6 +9,7 @@ import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.BottomSheetBehavior;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.widget.NestedScrollView;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.graphics.Palette;
 import android.support.v7.widget.Toolbar;
@@ -39,10 +40,9 @@ public class CategoryPodcastsActivity extends AppCompatActivity {
     private Category currentCategory;
     private static final String CATEGORY = "CATEGORY";
 
-    @BindView(R.id.app_bar)
-    AppBarLayout appBarLayout;
-    @BindView(R.id.toolbar)
-    Toolbar toolbar;
+    @BindView(R.id.toolbar) Toolbar toolbar;
+    @BindView(R.id.app_bar) AppBarLayout appBarLayout;
+    @BindView(R.id.nested_scrollview) NestedScrollView nestedScrollView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,7 +65,7 @@ public class CategoryPodcastsActivity extends AppCompatActivity {
         Bundle bundle = new Bundle();
         bundle.putParcelable(CATEGORY, currentCategory);
         fragment.setArguments(bundle);
-        ft.replace(R.id.frame_layout, fragment);
+        ft.replace(R.id.nested_scrollview, fragment);
         ft.commit();
 
     }
