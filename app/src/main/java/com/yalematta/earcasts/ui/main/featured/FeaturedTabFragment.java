@@ -14,7 +14,10 @@ import android.widget.Toast;
 
 import com.yalematta.earcasts.R;
 import com.yalematta.earcasts.data.models.podcast.Podcast;
+import com.yalematta.earcasts.ui.main.MainActivity;
 import com.yalematta.earcasts.ui.main.adapter.PodcastAdapter;
+import com.yalematta.earcasts.ui.podcasts.details.PodcastBottomDialogFragment;
+import com.yalematta.earcasts.ui.podcasts.details.PodcastBottomDialogPresenterImpl;
 
 import java.util.List;
 
@@ -25,11 +28,13 @@ import butterknife.ButterKnife;
  * Created by yalematta on 6/16/18.
  */
 
-public class FeaturedTabFragment extends Fragment implements FeaturedContract.View {
+public class FeaturedTabFragment extends Fragment implements FeaturedContract.View, FeaturedContract.onPodcastClickListener {
 
     private static final String TAG = FeaturedTabFragment.class.getSimpleName();
 
     private FeaturedContract.Presenter mPresenter;
+    private FeaturedContract.onPodcastClickListener mPodcastClickListener;
+    private PodcastBottomDialogPresenterImpl mPodcastBottomDialogPresenter;
 
     @BindView(R.id.recycler_view) RecyclerView recyclerView;
     @BindView(R.id.progress_bar) ProgressBar progressBar;
@@ -55,46 +60,6 @@ public class FeaturedTabFragment extends Fragment implements FeaturedContract.Vi
         gridLayoutManager = new GridLayoutManager(this.getContext(), numberOfColumns);
         recyclerView.setLayoutManager(gridLayoutManager);
 
-        // TODO: Click handling for RecyclerView
-        //        ItemClickSupport.addTo(recyclerView).setOnItemClickListener(
-        //                new ItemClickSupport.OnItemClickListener() {
-        //                    @Override
-        //                    public void onItemClicked(RecyclerView recyclerView, int position, View v) {
-        //                        ShowToast("clicked " + position);
-        //                    }
-        //                }
-        //        );
-
-        // TODO: In another fragment this would help us in the load more functionality
-        //        recyclerView.addOnScrollListener(new PaginationScrollListener(gridLayoutManager) {
-        //            @Override
-        //            protected void loadMoreItems() {
-        //                isLoading = true;
-        //                currentPage++;
-        //                if (screenType.equalsIgnoreCase(SHOWS_DETAILS)) {
-        ////                        getRelatedEpisodes();
-        //                    getRelatedEpisodesLoadMore();
-        //                } else {
-        //                    getRelatedBulletins();
-        //                }
-        //            }
-        //
-        //            @Override
-        //            public int getTotalPageCount() {
-        //                return 0;
-        //            }
-        //
-        //            @Override
-        //            public boolean isLastPage() {
-        //                return isLastPage;
-        //            }
-        //
-        //            @Override
-        //            public boolean isLoading() {
-        //                return isLoading;
-        //            }
-        //        });
-
         return root;
     }
 
@@ -110,7 +75,7 @@ public class FeaturedTabFragment extends Fragment implements FeaturedContract.Vi
 
     @Override
     public void onGetDataSuccess(String message, List<Podcast> list) {
-        podcastAdapter = new PodcastAdapter(getContext(), list);
+        podcastAdapter = new PodcastAdapter(getContext(), list, this);
         recyclerView.setAdapter(podcastAdapter);
         progressBar.setVisibility(View.GONE);
     }
@@ -120,5 +85,11 @@ public class FeaturedTabFragment extends Fragment implements FeaturedContract.Vi
         Log.d("Status", message);
     }
 
+    @Override
+    public void onPodcastClick(int position) {
+        PodcastBottomDialogFragment bottomPodcast = PodcastBottomDialogFragment.newInstance(position);
+        mPodcastBottomDialogPresenter = new PodcastBottomDialogPresenterImpl(bottomPodcast);
+        bottomPodcast.show(getActivity().getSupportFragmentManager(), "whatever_tag");
+    }
 }
 

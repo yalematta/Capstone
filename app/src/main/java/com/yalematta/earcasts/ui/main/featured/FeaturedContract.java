@@ -31,4 +31,8 @@ public interface FeaturedContract {
         void onSuccess(String message, List<Podcast> list);
         void onFailure(String message);
     }
+
+     interface onPodcastClickListener {
+        void onPodcastClick(int position);
+    }
 }
