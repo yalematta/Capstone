@@ -12,7 +12,7 @@ import java.util.List;
 
 public interface CategoryPodcastsContract {
 
-    interface View extends BaseView<CategoryPodcastsContract.Presenter> {
+    interface View extends BaseView<Presenter> {
         void onGetDataSuccess(String message, List<Podcast> catPodcasts);
         void onGetDataFailure(String message);
     }
