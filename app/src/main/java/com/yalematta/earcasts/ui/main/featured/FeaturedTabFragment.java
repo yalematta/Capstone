@@ -30,10 +30,7 @@ import butterknife.ButterKnife;
 
 public class FeaturedTabFragment extends Fragment implements FeaturedContract.View, FeaturedContract.onPodcastClickListener {
 
-    private static final String TAG = FeaturedTabFragment.class.getSimpleName();
-
     private FeaturedContract.Presenter mPresenter;
-    private FeaturedContract.onPodcastClickListener mPodcastClickListener;
     private PodcastBottomDialogPresenterImpl mPodcastBottomDialogPresenter;
 
     @BindView(R.id.recycler_view) RecyclerView recyclerView;

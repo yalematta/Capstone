@@ -29,4 +29,8 @@ public interface CategoryPodcastsContract {
         void onSuccess(String message, List<Podcast> catPodcasts);
         void onFailure(String message);
     }
+
+    interface onPodcastClickListener {
+        void onPodcastClick(int position);
+    }
 }
