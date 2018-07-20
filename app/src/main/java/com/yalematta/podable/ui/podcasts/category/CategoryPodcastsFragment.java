@@ -53,6 +53,12 @@ public class CategoryPodcastsFragment extends Fragment implements CategoryPodcas
         ButterKnife.bind(this, root);
         currentCategory = (Category) getArguments().get(CATEGORY);
         currentCategoryId = currentCategory.getId();
+        mPresenter = new CategoryPodcastsContract.Presenter() {
+            @Override
+            public void getCategoryPodcastsData(int categoryId, int page, int count) {
+
+            }
+        };
         mPresenter.getCategoryPodcastsData(currentCategoryId , 0, 10);
         linearLayoutManager = new LinearLayoutManager(this.getContext());
         recyclerView.setLayoutManager(linearLayoutManager);
