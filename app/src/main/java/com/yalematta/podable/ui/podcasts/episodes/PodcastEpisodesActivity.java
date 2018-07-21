@@ -7,11 +7,11 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.widget.NestedScrollView;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.graphics.Palette;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
@@ -32,7 +32,7 @@ public class PodcastEpisodesActivity extends AppCompatActivity {
     private PodcastEpisodesPresenterImpl mPresenter;
     
     @BindView(R.id.toolbar_layout) CollapsingToolbarLayout collapsedToolbar;
-    @BindView(R.id.frame_layout) FrameLayout frameLayout;
+    @BindView(R.id.nested_scrollview) NestedScrollView nestedScrollView;
     @BindView(R.id.app_bar) AppBarLayout appBarLayout;
     @BindView(R.id.expanded_image) ImageView ivLogo;
     @BindView(R.id.toolbar) Toolbar toolbar;
@@ -59,7 +59,7 @@ public class PodcastEpisodesActivity extends AppCompatActivity {
         Bundle bundle = new Bundle();
         bundle.putParcelable(PODCAST, currentPodcast);
         fragment.setArguments(bundle);
-        ft.replace(R.id.frame_layout, fragment);
+        ft.replace(R.id.nested_scrollview, fragment);
         ft.commit();
 
         Glide.with(this)

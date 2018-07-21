@@ -4,11 +4,15 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 
 import com.yalematta.podable.R;
 import com.yalematta.podable.data.models.podcast.Episode;
@@ -28,10 +32,12 @@ public class PodcastEpisodesFragment extends Fragment implements PodcastEpisodes
 
     private Podcast currentPodcast;
     private EpisodeAdapter episodeAdapter;
+    private LinearLayoutManager linearLayoutManager;
     private static final String PODCAST = "PODCAST";
     private PodcastEpisodesContract.Presenter mPresenter;
 
     @BindView(R.id.recycler_view) RecyclerView recyclerView;
+    @BindView(R.id.progress_bar) ProgressBar progressBar;
 
     @Nullable
     @Override
@@ -45,6 +51,8 @@ public class PodcastEpisodesFragment extends Fragment implements PodcastEpisodes
     private void initView() {
         currentPodcast = getArguments().getParcelable(PODCAST);
         mPresenter.getEpisodes(currentPodcast.getId(), 0, 10);
+        linearLayoutManager = new LinearLayoutManager(getContext());
+        recyclerView.setLayoutManager(linearLayoutManager);
     }
 
     @Override
@@ -61,6 +69,7 @@ public class PodcastEpisodesFragment extends Fragment implements PodcastEpisodes
     public void onGetDataSuccess(String message, List<Episode> episodes) {
         episodeAdapter = new EpisodeAdapter(this.getContext(), episodes);
         recyclerView.setAdapter(episodeAdapter);
+        progressBar.setVisibility(View.GONE);
     }
 
     @Override

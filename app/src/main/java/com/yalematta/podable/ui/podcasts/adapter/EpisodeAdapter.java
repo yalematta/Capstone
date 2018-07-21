@@ -24,7 +24,6 @@ public class EpisodeAdapter extends RecyclerView.Adapter<EpisodeAdapter.EpisodeV
 
     private Context context;
     private List<Episode> list = new ArrayList<>();
-    private PodcastEpisodesPresenterImpl mPodcastEpisodesPresenter;
 
     public EpisodeAdapter(Context context, List<Episode> list){
         this.context = context;
