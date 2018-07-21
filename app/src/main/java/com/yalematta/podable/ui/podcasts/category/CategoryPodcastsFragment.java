@@ -3,12 +3,14 @@ package com.yalematta.podable.ui.podcasts.category;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 
 import com.yalematta.podable.R;
@@ -57,6 +59,7 @@ public class CategoryPodcastsFragment extends Fragment implements CategoryPodcas
         mPresenter.getCategoryPodcastsData(currentCategoryId , 0, 20);
         linearLayoutManager = new LinearLayoutManager(this.getContext());
         recyclerView.setLayoutManager(linearLayoutManager);
+        recyclerView.addItemDecoration(new DividerItemDecoration(this.getActivity(), LinearLayout.VERTICAL));
 
         return root;
     }

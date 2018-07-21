@@ -10,14 +10,12 @@
         android:id="@+id/recycler_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_margin="3dp"
-        android:scrollbars="vertical"
-        android:layoutAnimation="@anim/grid_layout_animation_from_right" />
+        android:layout_margin="3dp" />
 
     <ProgressBar
         android:id="@+id/progress_bar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true" />
+        android:layout_width="75dp"
+        android:layout_height="75dp"
+        android:layout_centerInParent="true"/>
 
 </RelativeLayout>

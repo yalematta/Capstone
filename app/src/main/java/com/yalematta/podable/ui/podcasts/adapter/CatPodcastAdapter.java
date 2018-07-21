@@ -50,6 +50,7 @@ public class CatPodcastAdapter extends RecyclerView.Adapter<CatPodcastAdapter.Ca
                 .load(list.get(position).getSmallImageURL())
                 .into(holder.ivPodImage);
         holder.tvTitle.setText(list.get(position).getTitle());
+        holder.tvEpisodes.setText(list.get(position).getEpisodeCount() + " episodes");
         holder.root.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -73,6 +74,7 @@ public class CatPodcastAdapter extends RecyclerView.Adapter<CatPodcastAdapter.Ca
 
         @BindView(R.id.image_view) ImageView ivPodImage;
         @BindView(R.id.subscribe) Button btnSubscribe;
+        @BindView(R.id.episodes) TextView tvEpisodes;
         @BindView(R.id.title) TextView tvTitle;
         @BindView(R.id.root) LinearLayout root;
 
