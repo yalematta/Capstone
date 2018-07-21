@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -37,10 +38,8 @@ public class CategoriesTabFragment extends Fragment implements CategoriesContrac
     private static final String CATEGORY = "CATEGORY";
     private static final String CATEGORY_ID = "CATEGORY_ID";
 
-    @BindView(R.id.list_view)
-    ListView listView;
-    @BindView(R.id.empty_view)
-    TextView tvEmptyView;
+    @BindView(R.id.list_view) ListView listView;
+    @BindView(R.id.progress_bar) ProgressBar progressBar;
 
     public static CategoriesTabFragment newInstance() {
         return new CategoriesTabFragment();
@@ -72,6 +71,7 @@ public class CategoriesTabFragment extends Fragment implements CategoriesContrac
         List<String> categoryNames = extractCategoryNames(categoriesList);
         categoriesAdapter = new ArrayAdapter<>(getContext(), R.layout.category_item, R.id.rowTextView, categoryNames);
         listView.setAdapter(categoriesAdapter);
+        progressBar.setVisibility(View.GONE);
     }
 
     private List<String> extractCategoryNames(List<Category> categoriesList) {
