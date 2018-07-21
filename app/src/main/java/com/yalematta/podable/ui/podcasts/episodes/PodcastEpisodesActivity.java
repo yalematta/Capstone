@@ -29,6 +29,7 @@ public class PodcastEpisodesActivity extends AppCompatActivity {
 
     private Podcast currentPodcast;
     private static final String PODCAST = "PODCAST";
+    private PodcastEpisodesPresenterImpl mPresenter;
     
     @BindView(R.id.toolbar_layout) CollapsingToolbarLayout collapsedToolbar;
     @BindView(R.id.frame_layout) FrameLayout frameLayout;
@@ -53,6 +54,7 @@ public class PodcastEpisodesActivity extends AppCompatActivity {
 
         currentPodcast = getIntent().getParcelableExtra(PODCAST);
         PodcastEpisodesFragment fragment = new PodcastEpisodesFragment();
+        mPresenter = new PodcastEpisodesPresenterImpl(fragment);
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         Bundle bundle = new Bundle();
         bundle.putParcelable(PODCAST, currentPodcast);

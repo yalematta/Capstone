@@ -7,9 +7,11 @@ import android.support.v4.widget.NestedScrollView;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+import android.widget.FrameLayout;
 
 import com.yalematta.podable.R;
 import com.yalematta.podable.data.models.category.Category;
+import com.yalematta.podable.ui.main.featured.FeaturedPresenterImpl;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -22,10 +24,11 @@ public class CategoryPodcastsActivity extends AppCompatActivity {
 
     private Category currentCategory;
     private static final String CATEGORY = "CATEGORY";
+    private CategoryPodcastsPresenterImpl mPresenter;
 
     @BindView(R.id.toolbar) Toolbar toolbar;
     @BindView(R.id.app_bar) AppBarLayout appBarLayout;
-    @BindView(R.id.nested_scrollview) NestedScrollView nestedScrollView;
+    @BindView(R.id.frame_layout) FrameLayout frameLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,12 +46,13 @@ public class CategoryPodcastsActivity extends AppCompatActivity {
 
         currentCategory = getIntent().getParcelableExtra(CATEGORY);
         getSupportActionBar().setTitle(currentCategory.getName());
-        CategoryPodcastsFragment fragment = new CategoryPodcastsFragment();
+        CategoryPodcastsFragment fragment = CategoryPodcastsFragment.newInstance();
+        mPresenter = new CategoryPodcastsPresenterImpl(fragment);
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         Bundle bundle = new Bundle();
         bundle.putParcelable(CATEGORY, currentCategory);
         fragment.setArguments(bundle);
-        ft.replace(R.id.nested_scrollview, fragment);
+        ft.replace(R.id.frame_layout, fragment);
         ft.commit();
 
     }

@@ -14,6 +14,7 @@ import android.widget.ProgressBar;
 import com.yalematta.podable.R;
 import com.yalematta.podable.data.models.category.Category;
 import com.yalematta.podable.data.models.podcast.Podcast;
+import com.yalematta.podable.ui.main.featured.FeaturedPresenterImpl;
 import com.yalematta.podable.ui.podcasts.adapter.CatPodcastAdapter;
 import com.yalematta.podable.ui.podcasts.details.PodcastBottomDialogFragment;
 import com.yalematta.podable.ui.podcasts.details.PodcastBottomDialogPresenterImpl;
@@ -53,13 +54,7 @@ public class CategoryPodcastsFragment extends Fragment implements CategoryPodcas
         ButterKnife.bind(this, root);
         currentCategory = (Category) getArguments().get(CATEGORY);
         currentCategoryId = currentCategory.getId();
-        mPresenter = new CategoryPodcastsContract.Presenter() {
-            @Override
-            public void getCategoryPodcastsData(int categoryId, int page, int count) {
-
-            }
-        };
-        mPresenter.getCategoryPodcastsData(currentCategoryId , 0, 10);
+        mPresenter.getCategoryPodcastsData(currentCategoryId , 0, 20);
         linearLayoutManager = new LinearLayoutManager(this.getContext());
         recyclerView.setLayoutManager(linearLayoutManager);
 

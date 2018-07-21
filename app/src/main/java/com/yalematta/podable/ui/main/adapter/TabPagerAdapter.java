@@ -32,11 +32,9 @@ public class TabPagerAdapter extends FragmentPagerAdapter {
                 mFeaturedPresenter = new FeaturedPresenterImpl(featuredTabFragment);
                 return featuredTabFragment;
             }
-
             case 1: {
                 CategoriesTabFragment categoriesTabFragment = CategoriesTabFragment.newInstance();
                 mCategoriesPresenter = new CategoriesPresenterImpl(categoriesTabFragment);
-
                 return categoriesTabFragment;
             }
             default:

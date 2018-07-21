@@ -44,7 +44,7 @@ public class PodcastEpisodesFragment extends Fragment implements PodcastEpisodes
 
     private void initView() {
         currentPodcast = getArguments().getParcelable(PODCAST);
-//      mPresenter.getEpisodes(currentPodcast.getId(), 0, 10);
+        mPresenter.getEpisodes(currentPodcast.getId(), 0, 10);
     }
 
     @Override

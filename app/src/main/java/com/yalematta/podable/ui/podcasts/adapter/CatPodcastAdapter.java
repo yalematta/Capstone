@@ -5,6 +5,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -48,16 +49,13 @@ public class CatPodcastAdapter extends RecyclerView.Adapter<CatPodcastAdapter.Ca
         Glide.with(context)
                 .load(list.get(position).getSmallImageURL())
                 .into(holder.ivPodImage);
-
         holder.tvTitle.setText(list.get(position).getTitle());
-
         holder.root.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 podcastClickListener.onPodcastClick(list.get(position).getId());
             }
         });
-
         holder.btnSubscribe.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -73,8 +71,8 @@ public class CatPodcastAdapter extends RecyclerView.Adapter<CatPodcastAdapter.Ca
 
     public class CatPodViewHolder extends RecyclerView.ViewHolder {
 
-        @BindView(R.id.subscribe) ImageView btnSubscribe;
         @BindView(R.id.image_view) ImageView ivPodImage;
+        @BindView(R.id.subscribe) Button btnSubscribe;
         @BindView(R.id.title) TextView tvTitle;
         @BindView(R.id.root) LinearLayout root;
 
