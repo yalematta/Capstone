@@ -10,8 +10,14 @@ import com.yalematta.podable.R;
 import com.yalematta.podable.data.models.podcast.Episode;
 import com.yalematta.podable.ui.podcasts.episodes.PodcastEpisodesPresenterImpl;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -40,6 +46,23 @@ public class EpisodeAdapter extends RecyclerView.Adapter<EpisodeAdapter.EpisodeV
     @Override
     public void onBindViewHolder(EpisodeAdapter.EpisodeViewHolder holder, final int position) {
         holder.tvTitle.setText(list.get(position).getTitle());
+
+        // This is to parse your current date string
+        DateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZZZZZ");
+        String pub = list.get(position).getPubdate();
+        Date pubDate = null; // Handle the ParseException here
+        try {
+            pubDate = sdf.parse(pub);
+            Calendar c = Calendar.getInstance();
+            c.setTime(pubDate);
+            String day = String.valueOf(c.get(Calendar.DAY_OF_MONTH));
+            String month = new SimpleDateFormat("MMM").format(c.getTime());
+            holder.tvDay.setText(day);
+            holder.tvMonth.setText(month);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
     }
 
     @Override
@@ -50,6 +73,8 @@ public class EpisodeAdapter extends RecyclerView.Adapter<EpisodeAdapter.EpisodeV
     public class EpisodeViewHolder extends RecyclerView.ViewHolder {
 
         @BindView(R.id.title) TextView tvTitle;
+        @BindView(R.id.month) TextView tvMonth;
+        @BindView(R.id.day) TextView tvDay;
 
         public EpisodeViewHolder(View itemView) {
             super(itemView);
