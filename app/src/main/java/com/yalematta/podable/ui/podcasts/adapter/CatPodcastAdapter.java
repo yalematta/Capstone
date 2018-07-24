@@ -46,9 +46,7 @@ public class CatPodcastAdapter extends RecyclerView.Adapter<CatPodcastAdapter.Ca
 
     @Override
     public void onBindViewHolder(CatPodViewHolder holder, final int position) {
-        Glide.with(context)
-                .load(list.get(position).getSmallImageURL())
-                .into(holder.ivPodImage);
+        Glide.with(context).load(list.get(position).getSmallImageURL()).into(holder.ivPodImage);
         holder.tvTitle.setText(list.get(position).getTitle());
         holder.tvEpisodes.setText(list.get(position).getEpisodeCount() + " episodes");
         holder.root.setOnClickListener(new View.OnClickListener() {

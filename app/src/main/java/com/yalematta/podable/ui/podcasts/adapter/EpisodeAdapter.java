@@ -1,10 +1,12 @@
 package com.yalematta.podable.ui.podcasts.adapter;
 
 import android.content.Context;
+import android.graphics.PorterDuff;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import com.yalematta.podable.R;
 import com.yalematta.podable.data.models.podcast.Episode;
@@ -46,6 +48,7 @@ public class EpisodeAdapter extends RecyclerView.Adapter<EpisodeAdapter.EpisodeV
     @Override
     public void onBindViewHolder(EpisodeAdapter.EpisodeViewHolder holder, final int position) {
         holder.tvTitle.setText(list.get(position).getTitle());
+        holder.ibDownload.setColorFilter(context.getResources().getColor(R.color.colorAccent), PorterDuff.Mode.SRC_IN);
 
         // This is to parse your current date string
         DateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZZZZZ");
@@ -63,6 +66,13 @@ public class EpisodeAdapter extends RecyclerView.Adapter<EpisodeAdapter.EpisodeV
             e.printStackTrace();
         }
 
+        holder.ibDownload.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //podcastClickListener.onPodcastClick(list.get(position).getId());
+            }
+        });
+
     }
 
     @Override
@@ -72,9 +82,10 @@ public class EpisodeAdapter extends RecyclerView.Adapter<EpisodeAdapter.EpisodeV
 
     public class EpisodeViewHolder extends RecyclerView.ViewHolder {
 
+        @BindView(R.id.day) TextView tvDay;
         @BindView(R.id.title) TextView tvTitle;
         @BindView(R.id.month) TextView tvMonth;
-        @BindView(R.id.day) TextView tvDay;
+        @BindView(R.id.download) ImageButton ibDownload;
 
         public EpisodeViewHolder(View itemView) {
             super(itemView);
