@@ -1,6 +1,7 @@
 package com.yalematta.podable.ui.podcasts.adapter;
 
 import android.content.Context;
+import android.os.StrictMode;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,6 +17,11 @@ import com.yalematta.podable.ui.podcasts.episodes.PodcastEpisodesContract;
 import com.yalematta.podable.util.progress_pie.ProgressBarAnimation;
 import com.yalematta.podable.util.progress_pie.ProgressPie;
 
+import java.io.IOException;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.ProtocolException;
+import java.net.URL;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -92,6 +98,28 @@ public class EpisodeAdapter extends RecyclerView.Adapter<EpisodeAdapter.EpisodeV
             }
         });
 
+        URL url = null;
+
+//      if (android.os.Build.VERSION.SDK_INT > 9) {
+//          StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+//          StrictMode.setThreadPolicy(policy);
+//
+//          try {
+//              url = new URL(list.get(position).getEnclosure().toString());
+//              HttpURLConnection c = (HttpURLConnection) url.openConnection(); // Open Url Connection
+//              c.setRequestMethod("GET"); // Set Request Method to "GET" since we are getting data
+//              c.connect(); // Connect the URL Connection
+//              final String contentLength = c.getHeaderField("content-length");
+//              holder.tvSize.setText(contentLength);
+//          } catch (MalformedURLException e) {
+//              e.printStackTrace();
+//          } catch (ProtocolException e) {
+//              e.printStackTrace();
+//          } catch (IOException e) {
+//              e.printStackTrace();
+//          }
+//      }
+
     }
 
     @Override
@@ -102,6 +130,7 @@ public class EpisodeAdapter extends RecyclerView.Adapter<EpisodeAdapter.EpisodeV
     public class EpisodeViewHolder extends RecyclerView.ViewHolder {
 
         @BindView(R.id.day) TextView tvDay;
+        @BindView(R.id.size) TextView tvSize;
         @BindView(R.id.title) TextView tvTitle;
         @BindView(R.id.month) TextView tvMonth;
         @BindView(R.id.download) ImageView ibDownload;

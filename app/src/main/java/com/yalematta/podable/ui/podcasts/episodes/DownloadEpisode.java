@@ -94,14 +94,13 @@ public class DownloadEpisode {
             try {
                 URL url = new URL(downloadUrl);//Create Download URl
                 HttpURLConnection c = (HttpURLConnection) url.openConnection(); // Open Url Connection
-                c.setRequestMethod("GET");//Set Request Method to "GET" since we are grtting data
-                c.connect();//connect the URL Connection
+                c.setRequestMethod("GET"); // Set Request Method to "GET" since we are grtting data
+                c.connect(); // Connect the URL Connection
 
-                //If Connection response is not OK then show Logs
+                // If Connection response is not OK then show Logs
                 if (c.getResponseCode() != HttpURLConnection.HTTP_OK) {
                     Log.e(TAG, "Server returned HTTP " + c.getResponseCode()
                             + " " + c.getResponseMessage());
-
                 }
 
                 // Get File if SD card is present

@@ -45,21 +45,35 @@
         android:maxLines="2"
         android:textColor="@android:color/white" />
 
-    <ImageView
-        android:id="@+id/download"
+    <LinearLayout
         android:layout_width="0dp"
-        android:layout_height="24dp"
-        android:layout_gravity="center_vertical|center"
         android:layout_weight="0.1"
-        android:src="@drawable/ic_download"
-        android:tint="@color/colorAccent" />
+        android:orientation="vertical"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical|center">
 
-    <com.yalematta.podable.util.progress_pie.ProgressPie
-        android:visibility="gone"
-        android:layout_width="0dp"
-        android:layout_weight="0.1"
-        android:layout_height="24dp"
-        android:id="@+id/progress_pie"
-        android:layout_gravity="center"/>
+        <ImageView
+            android:id="@+id/download"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:src="@drawable/ic_download"
+            android:tint="@color/colorAccent" />
+
+        <com.yalematta.podable.util.progress_pie.ProgressPie
+            android:visibility="gone"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:id="@+id/progress_pie" />
+
+        <TextView
+            android:id="@+id/size"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:textColor="@android:color/darker_gray" />
+
+    </LinearLayout>
+
+
 
 </LinearLayout>
