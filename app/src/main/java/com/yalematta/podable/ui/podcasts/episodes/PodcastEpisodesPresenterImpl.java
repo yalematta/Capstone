@@ -1,6 +1,7 @@
 package com.yalematta.podable.ui.podcasts.episodes;
 
 import com.yalematta.podable.data.models.podcast.Episode;
+import com.yalematta.podable.data.models.podcast.Podcast;
 import com.yalematta.podable.data.remote.Interactor;
 
 import java.util.List;
@@ -26,8 +27,8 @@ public class PodcastEpisodesPresenterImpl implements PodcastEpisodesContract.Pre
     }
 
     @Override
-    public void onSuccess(String message, List<Episode> episodes) {
-        mPodcastEpisodesContractView.onGetDataSuccess(message, episodes);
+    public void onSuccess(String message, Podcast podcast) {
+        mPodcastEpisodesContractView.onGetDataSuccess(message, podcast);
     }
 
     @Override

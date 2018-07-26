@@ -3,6 +3,7 @@ package com.yalematta.podable.ui.podcasts.episodes;
 import com.yalematta.podable.BasePresenter;
 import com.yalematta.podable.BaseView;
 import com.yalematta.podable.data.models.podcast.Episode;
+import com.yalematta.podable.data.models.podcast.Podcast;
 
 import java.util.List;
 
@@ -14,7 +15,7 @@ import java.util.List;
 public interface PodcastEpisodesContract {
 
     interface View extends BaseView<Presenter> {
-        void onGetDataSuccess(String message, List<Episode> episodes);
+        void onGetDataSuccess(String message, Podcast podcast);
         void onGetDataFailure(String message);
     }
 
@@ -27,7 +28,11 @@ public interface PodcastEpisodesContract {
     }
 
     interface onGetDataListener{
-        void onSuccess(String message, List<Episode> episodes);
+        void onSuccess(String message, Podcast podcast);
         void onFailure(String message);
+    }
+
+    interface onEpisodeClickListener {
+        void onEpisodeClick(Episode episode, String podcastSlug);
     }
 }

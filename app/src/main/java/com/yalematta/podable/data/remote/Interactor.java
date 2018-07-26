@@ -36,12 +36,11 @@ public class Interactor implements FeaturedContract.Interactor, CategoriesContra
     private CategoryPodcastsContract.onGetDataListener mOnGetCategoryPodcastsListener;
     private PodcastBottomDialogContract.onGetDataListener mOnGetPodcastBottomDialogListener;
 
-
+    Podcast podcast = new Podcast();
     Podcast selectedPodcast = new Podcast();
     List<Podcast> allPodcasts = new ArrayList<>();
     List<Category> categoriesList = new ArrayList<>();
     List<Category> allCategories = new ArrayList<>();
-    List<Episode> podcastEpisodes = new ArrayList<>();
     List<Podcast> categoryPodcasts = new ArrayList<>();
     HashMap<Integer, Category> categoriesMap = new HashMap<>();
 
@@ -200,9 +199,9 @@ public class Interactor implements FeaturedContract.Interactor, CategoriesContra
             @Override
             public void onResponse(Call<BaseResponse<Podcast>> call, Response<BaseResponse<Podcast>> response) {
                 if (response.isSuccessful()) {
-                    podcastEpisodes = response.body().data.getEpisodes();
+                    podcast = response.body().data;
                     Log.d("Data", "Refreshed");
-                    mOnGetPodcastEpisodesListener.onSuccess("Episodes Size: " + podcastEpisodes.size(), podcastEpisodes);
+                    mOnGetPodcastEpisodesListener.onSuccess("Episodes Size: " + podcast.getEpisodes().size(), podcast);
 
                 } else {
                     Log.v("Error", "401 authentication error");
