@@ -101,21 +101,21 @@ public class PodcastEpisodesFragment extends Fragment implements PodcastEpisodes
 
         verifyStoragePermissions(getActivity());
 
-        if (isConnected())
-            new DownloadEpisode(this.getActivity(), episode, podcastSlug, episode.getEnclosure());
-        else
-            Toast.makeText(this.getActivity(), "Oops!! There is no internet connection. Please enable internet connection and try again.", Toast.LENGTH_SHORT).show();
+//        if (isConnected())
+//            new DownloadEpisode(this.getActivity(), episode, podcastSlug, episode.getEnclosure());
+//        else
+//            Toast.makeText(this.getActivity(), "Oops!! There is no internet connection. Please enable internet connection and try again.", Toast.LENGTH_SHORT).show();
     }
 
-    // Check if internet is present or not
-    private boolean isConnected() {
-        ConnectivityManager connectivityManager = (ConnectivityManager) getContext().getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
-        if (networkInfo != null && networkInfo.isConnected())
-            return true;
-        else
-            return false;
-    }
+//    // Check if internet is present or not
+//    private boolean isConnected() {
+//        ConnectivityManager connectivityManager = (ConnectivityManager) getContext().getSystemService(Context.CONNECTIVITY_SERVICE);
+//        NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
+//        if (networkInfo != null && networkInfo.isConnected())
+//            return true;
+//        else
+//            return false;
+//    }
 
     // Verify if permission is granted
     public static void verifyStoragePermissions(Activity activity) {

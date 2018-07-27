@@ -1,27 +1,26 @@
 package com.yalematta.podable.ui.podcasts.adapter;
 
 import android.content.Context;
-import android.os.StrictMode;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Interpolator;
-import android.view.animation.LinearInterpolator;
+import android.view.animation.OvershootInterpolator;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import com.yalematta.podable.R;
 import com.yalematta.podable.data.models.podcast.Episode;
 import com.yalematta.podable.data.models.podcast.Podcast;
+import com.yalematta.podable.ui.podcasts.episodes.DownloadEpisode;
 import com.yalematta.podable.ui.podcasts.episodes.PodcastEpisodesContract;
 import com.yalematta.podable.util.progress_pie.ProgressBarAnimation;
 import com.yalematta.podable.util.progress_pie.ProgressPie;
 
-import java.io.IOException;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.ProtocolException;
-import java.net.URL;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -41,7 +40,6 @@ public class EpisodeAdapter extends RecyclerView.Adapter<EpisodeAdapter.EpisodeV
 
     private Context context;
     private Podcast podcast;
-    private Interpolator interpolator;
     private List<Episode> list = new ArrayList<>();
     private PodcastEpisodesContract.onEpisodeClickListener episodeClickListener;
 
@@ -79,8 +77,6 @@ public class EpisodeAdapter extends RecyclerView.Adapter<EpisodeAdapter.EpisodeV
             e.printStackTrace();
         }
 
-        interpolator = new LinearInterpolator();
-
         holder.ibDownload.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -88,37 +84,12 @@ public class EpisodeAdapter extends RecyclerView.Adapter<EpisodeAdapter.EpisodeV
                 holder.progressPie.setVisibility(View.VISIBLE);
                 holder.ibDownload.setVisibility(View.GONE);
 
-                String percentageStr = "100";
-                Integer percent = percentageStr.isEmpty() ? 0 : Integer.valueOf(percentageStr);
-                ProgressBarAnimation animation = new ProgressBarAnimation(holder.progressPie,
-                        0, percent > 100 ? 100 : percent);
-                animation.setDuration(2000);
-                animation.setInterpolator(interpolator);
-                holder.progressPie.startAnimation(animation);
+                if (isConnected())
+                    new DownloadEpisode(context, holder.tvSize, holder.progressPie, list.get(position), podcast.getSlug(), list.get(position).getEnclosure());
+                else
+                    Toast.makeText(context, "Oops!! There is no internet connection. Please enable internet connection and try again.", Toast.LENGTH_SHORT).show();
             }
         });
-
-        URL url = null;
-
-//      if (android.os.Build.VERSION.SDK_INT > 9) {
-//          StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
-//          StrictMode.setThreadPolicy(policy);
-//
-//          try {
-//              url = new URL(list.get(position).getEnclosure().toString());
-//              HttpURLConnection c = (HttpURLConnection) url.openConnection(); // Open Url Connection
-//              c.setRequestMethod("GET"); // Set Request Method to "GET" since we are getting data
-//              c.connect(); // Connect the URL Connection
-//              final String contentLength = c.getHeaderField("content-length");
-//              holder.tvSize.setText(contentLength);
-//          } catch (MalformedURLException e) {
-//              e.printStackTrace();
-//          } catch (ProtocolException e) {
-//              e.printStackTrace();
-//          } catch (IOException e) {
-//              e.printStackTrace();
-//          }
-//      }
 
     }
 
@@ -140,5 +111,14 @@ public class EpisodeAdapter extends RecyclerView.Adapter<EpisodeAdapter.EpisodeV
             super(itemView);
             ButterKnife.bind(this, itemView);
         }
+    }
+
+    private boolean isConnected() {
+        ConnectivityManager connectivityManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
+        if (networkInfo != null && networkInfo.isConnected())
+            return true;
+        else
+            return false;
     }
 }

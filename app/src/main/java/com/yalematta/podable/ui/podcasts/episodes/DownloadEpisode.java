@@ -1,27 +1,26 @@
 package com.yalematta.podable.ui.podcasts.episodes;
 
-import android.Manifest;
-import android.app.Activity;
 import android.content.Context;
-import android.content.pm.PackageManager;
 import android.os.AsyncTask;
 import android.os.Environment;
 import android.os.Handler;
-import android.support.v4.app.ActivityCompat;
 import android.util.Log;
-import android.widget.Button;
+import android.view.View;
+import android.view.animation.Interpolator;
+import android.view.animation.OvershootInterpolator;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.yalematta.podable.R;
 import com.yalematta.podable.data.models.podcast.Episode;
+import com.yalematta.podable.util.progress_pie.ProgressBarAnimation;
 
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
-
-import butterknife.internal.Utils;
 
 /**
  * Created by yalematta on 7/26/18.
@@ -30,11 +29,16 @@ import butterknife.internal.Utils;
 public class DownloadEpisode {
 
     private Context context;
+    private TextView tvSize;
+    private ProgressBar progressBar;
+    private Interpolator interpolator;
     private static final String TAG = "Download Episode";
     private String downloadUrl = "", downloadFileName = "";
 
-    public DownloadEpisode(Context context, Episode episode, String podcastSlug, String downloadUrl) {
+    public DownloadEpisode(Context context, TextView tvSize, ProgressBar progressBar, Episode episode, String podcastSlug, String downloadUrl) {
         this.context = context;
+        this.tvSize = tvSize;
+        this.progressBar = progressBar;
         this.downloadUrl = downloadUrl;
 
         downloadFileName = podcastSlug + "_" + episode.getId().toString(); // Create file name
@@ -44,8 +48,9 @@ public class DownloadEpisode {
         new DownloadingEpisode().execute();
     }
 
-    private class DownloadingEpisode extends AsyncTask<Void, Void, Void> {
+    private class DownloadingEpisode extends AsyncTask<Void, Integer, Void> {
 
+        int lenghtOfFile;
         File apkStorage = null;
         File outputFile = null;
 
@@ -59,7 +64,7 @@ public class DownloadEpisode {
         protected void onPostExecute(Void result) {
             try {
                 if (outputFile != null) {
-                    Log.e(TAG, "Download Completed"); // If Download completed then change button text
+                    Log.e(TAG, "Download Completed"); // If Download completed
                 } else {
                     Log.e(TAG, "Download Failed"); // If download failed change button text
                     new Handler().postDelayed(new Runnable() {
@@ -91,11 +96,14 @@ public class DownloadEpisode {
 
         @Override
         protected Void doInBackground(Void... arg0) {
+
             try {
                 URL url = new URL(downloadUrl);//Create Download URl
                 HttpURLConnection c = (HttpURLConnection) url.openConnection(); // Open Url Connection
                 c.setRequestMethod("GET"); // Set Request Method to "GET" since we are grtting data
                 c.connect(); // Connect the URL Connection
+
+                lenghtOfFile = c.getContentLength();
 
                 // If Connection response is not OK then show Logs
                 if (c.getResponseCode() != HttpURLConnection.HTTP_OK) {
@@ -128,9 +136,12 @@ public class DownloadEpisode {
                 InputStream is = c.getInputStream(); // Get InputStream for connection
 
                 byte[] buffer = new byte[1024]; // Set buffer type
+
                 int len1 = 0; // init length
+
                 while ((len1 = is.read(buffer)) != -1) {
                     fos.write(buffer, 0, len1); // Write new file
+                    publishProgress((int)((len1*100)/lenghtOfFile));
                 }
 
                 // Close all connection after doing task
@@ -146,6 +157,29 @@ public class DownloadEpisode {
             }
 
             return null;
+        }
+
+        @Override
+        protected void onProgressUpdate(Integer... values) {
+            super.onProgressUpdate(values);
+
+            // Making progress bar visible
+            progressBar.setVisibility(View.VISIBLE);
+
+            // updating progress bar value
+            progressBar.setProgress(values[0]);
+
+            interpolator = new OvershootInterpolator();
+            Integer percent = values[0];
+            ProgressBarAnimation animation = new ProgressBarAnimation(progressBar,
+                    values[0], percent > values[0] ? 0 : percent);
+            animation.setDuration(2000);
+            animation.setInterpolator(interpolator);
+            progressBar.startAnimation(animation);
+
+            // updating percentage value
+            tvSize.setText(String.valueOf(values[0]) + "%");
+
         }
     }
 
