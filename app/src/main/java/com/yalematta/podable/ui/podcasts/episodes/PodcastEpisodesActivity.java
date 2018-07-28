@@ -80,7 +80,6 @@ public class PodcastEpisodesActivity extends AppCompatActivity {
                         if(dominantSwatch != null){
                             int backgroundColor = dominantSwatch.getRgb();
                             appBarLayout.setBackgroundColor(backgroundColor);
-                            //toolbar.setBackgroundColor(backgroundColor);
                         }
                         return false;
                     }

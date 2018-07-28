@@ -6,15 +6,13 @@ import android.os.Environment;
 import android.os.Handler;
 import android.util.Log;
 import android.view.View;
-import android.view.animation.Interpolator;
-import android.view.animation.OvershootInterpolator;
-import android.widget.ProgressBar;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.timqi.sectorprogressview.SectorProgressView;
 import com.yalematta.podable.R;
 import com.yalematta.podable.data.models.podcast.Episode;
-import com.yalematta.podable.util.progress_pie.ProgressBarAnimation;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -30,14 +28,15 @@ public class DownloadEpisode {
 
     private Context context;
     private TextView tvSize;
-    private ProgressBar progressBar;
-    private Interpolator interpolator;
+    private ImageView ivDownload;
+    private SectorProgressView progressBar;
     private static final String TAG = "Download Episode";
     private String downloadUrl = "", downloadFileName = "";
 
-    public DownloadEpisode(Context context, TextView tvSize, ProgressBar progressBar, Episode episode, String podcastSlug, String downloadUrl) {
-        this.context = context;
+    public DownloadEpisode(Context context, ImageView ivDownload, TextView tvSize, SectorProgressView progressBar, Episode episode, String podcastSlug, String downloadUrl) {
         this.tvSize = tvSize;
+        this.context = context;
+        this.ivDownload = ivDownload;
         this.progressBar = progressBar;
         this.downloadUrl = downloadUrl;
 
@@ -48,7 +47,7 @@ public class DownloadEpisode {
         new DownloadingEpisode().execute();
     }
 
-    private class DownloadingEpisode extends AsyncTask<Void, Integer, Void> {
+    private class DownloadingEpisode extends AsyncTask<Void, Integer, Void> implements View.OnClickListener {
 
         int lenghtOfFile;
         File apkStorage = null;
@@ -58,12 +57,17 @@ public class DownloadEpisode {
         protected void onPreExecute() {
             super.onPreExecute();
             Log.e(TAG, "Download Started");
+            progressBar.setOnClickListener(this);
         }
 
         @Override
         protected void onPostExecute(Void result) {
             try {
                 if (outputFile != null) {
+                    tvSize.setVisibility(View.GONE);
+                    progressBar.setVisibility(View.GONE);
+                    ivDownload.setVisibility(View.VISIBLE);
+                    ivDownload.setImageResource(R.drawable.ic_play);
                     Log.e(TAG, "Download Completed"); // If Download completed
                 } else {
                     Log.e(TAG, "Download Failed"); // If download failed change button text
@@ -132,16 +136,26 @@ public class DownloadEpisode {
                 }
 
                 FileOutputStream fos = new FileOutputStream(outputFile); // Get OutputStream for NewFile Location
-
                 InputStream is = c.getInputStream(); // Get InputStream for connection
 
                 byte[] buffer = new byte[1024]; // Set buffer type
+                long total = 0;
+                int len1 = 0;
 
-                int len1 = 0; // init length
-
-                while ((len1 = is.read(buffer)) != -1) {
+                while ((len1 = is.read(buffer)) > 0) {
+                    total += len1; // total = total + len1
+                    publishProgress((int)((total*100)/lenghtOfFile));
                     fos.write(buffer, 0, len1); // Write new file
-                    publishProgress((int)((len1*100)/lenghtOfFile));
+
+                    if (isCancelled()) {
+                        if (outputFile.exists()) {
+                            outputFile.delete();
+                            Log.e(TAG, "File Deleted");
+                        }
+                        fos.close();
+                        is.close();
+                        return null;
+                    }
                 }
 
                 // Close all connection after doing task
@@ -164,22 +178,28 @@ public class DownloadEpisode {
             super.onProgressUpdate(values);
 
             // Making progress bar visible
+            tvSize.setVisibility(View.VISIBLE);
             progressBar.setVisibility(View.VISIBLE);
 
-            // updating progress bar value
-            progressBar.setProgress(values[0]);
+            // Updating progress bar value
+            progressBar.setPercent(values[0]);
 
-            interpolator = new OvershootInterpolator();
-            Integer percent = values[0];
-            ProgressBarAnimation animation = new ProgressBarAnimation(progressBar,
-                    values[0], percent > values[0] ? 0 : percent);
-            animation.setDuration(2000);
-            animation.setInterpolator(interpolator);
-            progressBar.startAnimation(animation);
-
-            // updating percentage value
+            // Updating percentage value
             tvSize.setText(String.valueOf(values[0]) + "%");
+        }
 
+        @Override
+        public void onClick(View view) {
+            tvSize.setVisibility(View.GONE);
+            progressBar.setVisibility(View.GONE);
+            ivDownload.setVisibility(View.VISIBLE);
+            this.cancel(true);
+        }
+
+        @Override
+        protected void onCancelled() {
+            super.onCancelled();
+            Log.e(TAG, "Download Cancelled");
         }
     }
 

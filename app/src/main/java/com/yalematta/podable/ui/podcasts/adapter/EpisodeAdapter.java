@@ -7,19 +7,16 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.Interpolator;
-import android.view.animation.OvershootInterpolator;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.timqi.sectorprogressview.SectorProgressView;
 import com.yalematta.podable.R;
 import com.yalematta.podable.data.models.podcast.Episode;
 import com.yalematta.podable.data.models.podcast.Podcast;
 import com.yalematta.podable.ui.podcasts.episodes.DownloadEpisode;
 import com.yalematta.podable.ui.podcasts.episodes.PodcastEpisodesContract;
-import com.yalematta.podable.util.progress_pie.ProgressBarAnimation;
-import com.yalematta.podable.util.progress_pie.ProgressPie;
 
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -77,15 +74,15 @@ public class EpisodeAdapter extends RecyclerView.Adapter<EpisodeAdapter.EpisodeV
             e.printStackTrace();
         }
 
-        holder.ibDownload.setOnClickListener(new View.OnClickListener() {
+        holder.ivDownload.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 episodeClickListener.onEpisodeClick(list.get(position), podcast.getSlug());
                 holder.progressPie.setVisibility(View.VISIBLE);
-                holder.ibDownload.setVisibility(View.GONE);
+                holder.ivDownload.setVisibility(View.GONE);
 
                 if (isConnected())
-                    new DownloadEpisode(context, holder.tvSize, holder.progressPie, list.get(position), podcast.getSlug(), list.get(position).getEnclosure());
+                    new DownloadEpisode(context, holder.ivDownload, holder.tvSize, holder.progressPie, list.get(position), podcast.getSlug(), list.get(position).getEnclosure());
                 else
                     Toast.makeText(context, "Oops!! There is no internet connection. Please enable internet connection and try again.", Toast.LENGTH_SHORT).show();
             }
@@ -104,8 +101,8 @@ public class EpisodeAdapter extends RecyclerView.Adapter<EpisodeAdapter.EpisodeV
         @BindView(R.id.size) TextView tvSize;
         @BindView(R.id.title) TextView tvTitle;
         @BindView(R.id.month) TextView tvMonth;
-        @BindView(R.id.download) ImageView ibDownload;
-        @BindView(R.id.progress_pie) ProgressPie progressPie;
+        @BindView(R.id.download) ImageView ivDownload;
+        @BindView(R.id.progress_pie) SectorProgressView progressPie;
 
         public EpisodeViewHolder(View itemView) {
             super(itemView);
