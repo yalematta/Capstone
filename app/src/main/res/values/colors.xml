@@ -6,4 +6,6 @@
     <color name="colorPrimaryLight">#343464</color>
     <color name="colorPrimaryLight2">#7D7FBB</color>
     <color name="colorAccent">#F4BE2A</color>
+
+    <color name="placeholderBackground">#828282</color>
 </resources>

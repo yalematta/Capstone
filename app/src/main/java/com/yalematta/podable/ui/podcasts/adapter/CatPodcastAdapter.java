@@ -11,6 +11,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.yalematta.podable.R;
 import com.yalematta.podable.data.models.podcast.Podcast;
 import com.yalematta.podable.ui.podcasts.category.CategoryPodcastsContract;
@@ -46,7 +47,10 @@ public class CatPodcastAdapter extends RecyclerView.Adapter<CatPodcastAdapter.Ca
 
     @Override
     public void onBindViewHolder(CatPodViewHolder holder, final int position) {
-        Glide.with(context).load(list.get(position).getSmallImageURL()).into(holder.ivPodImage);
+        Glide.with(context)
+                .load(list.get(position).getSmallImageURL())
+                .apply(new RequestOptions().placeholder(R.drawable.ic_placeholder).fitCenter())
+                .into(holder.ivPodImage);
         holder.tvTitle.setText(list.get(position).getTitle());
         holder.tvEpisodes.setText(list.get(position).getEpisodeCount() + " episodes");
         holder.root.setOnClickListener(new View.OnClickListener() {
