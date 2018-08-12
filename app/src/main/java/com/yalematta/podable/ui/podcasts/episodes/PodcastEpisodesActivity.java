@@ -64,7 +64,7 @@ public class PodcastEpisodesActivity extends AppCompatActivity {
 
         Glide.with(this)
                 .asDrawable()
-                .load(currentPodcast.getSmallImageURL())
+                .load(currentPodcast.getImgURL())
                 .listener(new RequestListener() {
                     @Override
                     public boolean onLoadFailed(@Nullable GlideException e, Object model, Target target, boolean isFirstResource) {
