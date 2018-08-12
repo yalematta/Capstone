@@ -40,12 +40,18 @@ public class PodcastBottomDialogFragment extends BottomSheetDialogFragment imple
     private AnimatedVectorDrawable mCheckDrawable;
     private boolean mFabFlag;
 
-    @BindView(R.id.image) ImageView ivLogo;
-    @BindView(R.id.title) TextView tvTitle;
-    @BindView(R.id.subtitle) TextView tvSubtitle;
-    @BindView(R.id.fab) FloatingActionButton fab;
-    @BindView(R.id.description) TextView tvDescription;
-    @BindView(R.id.bottomsheet) BottomSheetLayout bottomSheetLayout;
+    @BindView(R.id.image)
+    ImageView ivLogo;
+    @BindView(R.id.title)
+    TextView tvTitle;
+    @BindView(R.id.subtitle)
+    TextView tvSubtitle;
+    @BindView(R.id.fab)
+    FloatingActionButton fab;
+    @BindView(R.id.description)
+    TextView tvDescription;
+    @BindView(R.id.bottomsheet)
+    BottomSheetLayout bottomSheetLayout;
 
     public static PodcastBottomDialogFragment newInstance(int podcastId) {
         PodcastBottomDialogFragment fragment = new PodcastBottomDialogFragment();
@@ -114,12 +120,13 @@ public class PodcastBottomDialogFragment extends BottomSheetDialogFragment imple
         selectedPodcast = podcast;
 
         tvTitle.setText(podcast.getTitle());
-        tvSubtitle.setText(getString(R.string.subtitle));
+        tvSubtitle.setText(getResources().getString(R.string.subtitle));
         tvDescription.setText(podcast.getSubtitle());
 
         Glide.with(getActivity())
                 .load(podcast.getSmallImageURL())
                 .into(ivLogo);
+
     }
 
     @Override
@@ -129,7 +136,7 @@ public class PodcastBottomDialogFragment extends BottomSheetDialogFragment imple
 
     @Override
     public void onClick(View view) {
-        switch (view.getId()){
+        switch (view.getId()) {
             case R.id.fab:
                 fabClick();
         }
