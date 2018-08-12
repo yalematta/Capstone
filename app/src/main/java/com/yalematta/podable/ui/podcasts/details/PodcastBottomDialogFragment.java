@@ -116,6 +116,9 @@ public class PodcastBottomDialogFragment extends BottomSheetDialogFragment imple
     @Override
     public void onGetDataSuccess(String message, Podcast podcast) {
 
+        if(!isAdded ())
+            return;
+
         selectedPodcast = new Podcast();
         selectedPodcast = podcast;
 
@@ -126,7 +129,6 @@ public class PodcastBottomDialogFragment extends BottomSheetDialogFragment imple
         Glide.with(getActivity())
                 .load(podcast.getSmallImageURL())
                 .into(ivLogo);
-
     }
 
     @Override

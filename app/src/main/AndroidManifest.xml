@@ -19,7 +19,7 @@
         <activity android:name="com.yalematta.podable.ui.main.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
+                <action android:name="android.intent.action.SEARCH" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -31,9 +31,19 @@
             android:name="com.yalematta.podable.ui.podcasts.category.CategoryPodcastsActivity"
             android:label="@string/title_activity_podcast"
             android:theme="@style/AppTheme"></activity>
+
         <meta-data
             android:name="io.fabric.ApiKey"
             android:value="4544c943b67102c10eb2487c5d32a34e489c455f" />
+
+        <meta-data
+            android:name="android.app.default_searchable"
+            android:value="com.yalematta.podable.ui.main.MainActivity" />
+        <meta-data
+            android:name="android.app.searchable"
+            android:resource="@xml/searchable" />
+
+
     </application>
 
 </manifest>
