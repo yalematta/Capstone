@@ -3,9 +3,7 @@
     package="com.yalematta.podable">
 
     <uses-permission android:name="android.permission.INTERNET" />
-
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
@@ -22,8 +20,6 @@
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-            <meta-data android:name="android.app.default_searchable"
-                android:value=".SearchActivity" />
         </activity>
 
         <activity
@@ -38,7 +34,7 @@
             android:theme="@style/AppTheme">
         </activity>
 
-        <activity android:name="com.yalematta.podable.ui.main.SearchActivity" android:launchMode="singleTop">
+        <activity android:name="com.yalematta.podable.ui.main.search.SearchActivity" android:launchMode="singleTop">
             <intent-filter>
                 <action android:name="android.intent.action.SEARCH" />
             </intent-filter>
@@ -46,6 +42,9 @@
                 android:name="android.app.searchable"
                 android:resource="@xml/searchable" />
         </activity>
+
+        <meta-data android:name="android.app.default_searchable"
+            android:value="com.yalematta.podable.ui.main.search.SearchActivity" />
 
         <meta-data
             android:name="io.fabric.ApiKey"

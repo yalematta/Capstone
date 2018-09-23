@@ -52,7 +52,7 @@ public class FeaturedTabFragment extends Fragment implements FeaturedContract.Vi
         View root = inflater.inflate(R.layout.featured_frag, container, false);
         ButterKnife.bind(this, root);
         int numberOfColumns = 3;
-        mPresenter.getFeaturedData(30 , "en");
+        mPresenter.getFeaturedData(15 , "en");
         gridLayoutManager = new GridLayoutManager(this.getContext(), numberOfColumns);
         recyclerView.setLayoutManager(gridLayoutManager);
 

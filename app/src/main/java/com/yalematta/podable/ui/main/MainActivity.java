@@ -9,6 +9,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 
 import com.crashlytics.android.Crashlytics;
@@ -19,7 +20,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import io.fabric.sdk.android.Fabric;
 
-public class MainActivity extends AppCompatActivity implements SearchView.OnQueryTextListener {
+public class MainActivity extends AppCompatActivity {
 
     @BindView(R.id.tabs) TabLayout mTab;
     @BindView(R.id.toolbar) Toolbar toolbar;
@@ -59,24 +60,31 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_podcast, menu);
-
-        SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
-        SearchView searchView = (SearchView) menu.findItem(R.id.search).getActionView();
-        // Assumes current activity is the searchable activity
-        searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
-        searchView.setIconifiedByDefault(false); // Do not iconify the widget; expand it by default
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu_podcast, menu);
 
         return true;
     }
 
     @Override
-    public boolean onQueryTextSubmit(String s) {
-        return false;
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.search:
+                //start search dialog
+                onSearchRequested();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 
-    @Override
-    public boolean onQueryTextChange(String s) {
-        return false;
-    }
+//    @Override
+//    public boolean onQueryTextSubmit(String s) {
+//        return false;
+//    }
+//
+//    @Override
+//    public boolean onQueryTextChange(String s) {
+//        return false;
+//    }
 }
